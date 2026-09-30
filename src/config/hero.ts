@@ -50,11 +50,11 @@ export const heroSlides: HeroSlide[] = [
     // href por la ficha del servicio/equipo cuando exista.
     id: "rayosx",
     label: "Nuevo equipo",
-    title: "Rayos X con Inteligencia Artificial, resultados más rápidos y claros",
-    highlight: "Inteligencia Artificial",
-    text: "Nuestro nuevo equipo de rayos X con IA ayuda a detectar hallazgos con mayor rapidez y claridad para tu médico.",
+    title: "Rayos X de última generación, resultados más rápidos y claros",
+    highlight: "última generación",
+    text: "Nuestro nuevo equipo de rayos X de última generación ayuda a obtener imágenes más nítidas y resultados más rápidos para tu médico.",
     image: "/hero/rayos-x-ia.jpg",
-    alt: "Equipo de rayos X con inteligencia artificial en una de nuestras sedes",
+    alt: "Equipo de rayos X de última generación en una de nuestras sedes",
     cta: { label: "Más información", href: "/servicios" },
   },
 ];

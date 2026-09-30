@@ -38,7 +38,7 @@ export const labServices: LabService[] = [
   // Nuevos equipos (no vienen del listado original de 495 exámenes; se
   // agregan aparte porque son equipos, no análisis de laboratorio clásicos).
   { id: "ecografia-con-inteligencia-artificial", name: "ECOGRAFÍA CON INTELIGENCIA ARTIFICIAL", category: "imagenologia" },
-  { id: "rayos-x-con-inteligencia-artificial", name: "RAYOS X CON INTELIGENCIA ARTIFICIAL", category: "imagenologia" },
+  { id: "rayos-x-de-ultima-generacion", name: "RAYOS X DE ÚLTIMA GENERACIÓN", category: "imagenologia" },
   { id: "17-hidroxiprogesterona-ser", name: "17 HIDROXIPROGESTERONA SER.", category: "hormonas" },
   { id: "acido-folico-vitamina-b9", name: "ACIDO FOLICO (VITAMINA B9)", category: "vitaminas" },
   { id: "acido-urico-orina-24-hrs", name: "ACIDO URICO (ORINA 24 HRS.)", category: "orina_heces" },

@@ -26,9 +26,9 @@ export const examDetails: Record<string, ExamDetail> = {
       "La preparación (por ejemplo, ayuno o vejiga llena) depende de la zona a evaluar; se confirma contigo al momento de agendar.",
     ],
   },
-  "rayos-x-con-inteligencia-artificial": {
+  "rayos-x-de-ultima-generacion": {
     description:
-      "Estudio radiológico apoyado con inteligencia artificial, que agiliza la lectura de las imágenes y ayuda a identificar hallazgos con mayor claridad para tu médico.",
+      "Estudio radiológico con equipo de última generación, que ofrece imágenes más nítidas y agiliza la obtención de resultados para tu médico.",
     muestra: "No aplica — es un estudio de imagen, no requiere muestra de sangre.",
     requisitos: [
       "No suele requerir preparación especial; cualquier indicación particular para tu caso se confirma al agendar.",

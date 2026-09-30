@@ -1,4 +1,5 @@
-// Equipos nuevos del laboratorio (ecografía y rayos X con IA). Se usa tanto
+// Equipos nuevos del laboratorio (ecógrafo con IA y rayos X de última
+// generación — el rayos X no usa IA). Se usa tanto
 // en la sección "Nuevas innovaciones" del inicio como en el banner de
 // /servicios. "serviceId" enlaza con el catálogo (src/config/services.ts)
 // para poder agregarlos al carrito y abrir su ficha en /servicios/[id].
@@ -23,11 +24,11 @@ export const innovations: Innovation[] = [
   },
   {
     id: "rayosx",
-    serviceId: "rayos-x-con-inteligencia-artificial",
-    title: "Rayos X con Inteligencia Artificial",
+    serviceId: "rayos-x-de-ultima-generacion",
+    title: "Rayos X de última generación",
     description:
-      "Nuestro nuevo equipo de rayos X con IA ayuda a detectar hallazgos con mayor rapidez y claridad para tu médico.",
+      "Nuestro nuevo equipo de rayos X de última generación ayuda a obtener imágenes más nítidas y resultados más rápidos para tu médico.",
     image: "/innovaciones/rayos-x-ia.jpg",
-    alt: "Equipo de rayos X con inteligencia artificial en una de nuestras sedes",
+    alt: "Equipo de rayos X de última generación en una de nuestras sedes",
   },
 ];
