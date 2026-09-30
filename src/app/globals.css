@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-munoz-blue: #1a73b8;
+  --color-munoz-navy: #0f3b66;
+  --color-munoz-green: #3a9a4a;
+  --color-munoz-aqua: #7fd3dc;
+  --color-munoz-mist: #f0f5fa;
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html { scroll-padding-top: 5rem; }
+body { color: var(--color-munoz-navy); background: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes bubble-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.bubble-in { animation: bubble-in 0.35s ease-out; }
+
+/* Hero */
+@keyframes text-swap {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+.text-swap { animation: text-swap 0.6s ease-out both; }
+
+/* Agregar esto al FINAL de src/app/globals.css (no borres nada existente) */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-16px) scale(1.06);
+  }
+}
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+ 
+/* Agregar esto al FINAL de src/app/globals.css (además de lo que ya
+   pegaste antes: fade-up y float-slow). No borres nada existente. */
+
+@keyframes drift {
+  0% {
+    transform: translate(-6%, 0%) scale(1);
+  }
+  50% {
+    transform: translate(8%, -5%) scale(1.08);
+  }
+  100% {
+    transform: translate(-6%, 0%) scale(1);
+  }
+}
+.animate-drift {
+  animation: drift 16s ease-in-out infinite;
+}
+
+@keyframes drift-reverse {
+  0% {
+    transform: translate(6%, 0%) scale(1.05);
+  }
+  50% {
+    transform: translate(-8%, 4%) scale(1);
+  }
+  100% {
+    transform: translate(6%, 0%) scale(1.05);
+  }
+}
+.animate-drift-reverse {
+  animation: drift-reverse 20s ease-in-out infinite;
 }
