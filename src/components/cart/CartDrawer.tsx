@@ -6,6 +6,7 @@ import {
   Check,
   ChevronLeft,
   Home,
+  Info,
   MapPin,
   MessageCircle,
   Trash2,
@@ -15,6 +16,7 @@ import { useCart } from "@/context/CartContext";
 import { sedes, zonasConSede, type Sede } from "@/config/sedes";
 import { assistant } from "@/config/site";
 import { serviceCategories, type ServiceCategorySlug } from "@/config/services";
+import { sedeExclusivaTexto } from "@/lib/sedeDisponibilidad";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue";
@@ -64,6 +66,23 @@ export function CartDrawer() {
   const sedesSugeridas = useMemo(() => (zona ? sedes.filter((s) => s.zone === zona) : []), [zona]);
   const sedeSeleccionada: Sede | undefined = sedes.find((s) => s.id === sedeId);
 
+  // Si el carrito incluye equipos que solo están en una sede puntual (p. ej.
+  // el ecógrafo o el rayos X, que solo están en Peral), la cita no puede
+  // agendarse en cualquier sede ni a domicilio: hay que restringir el flujo.
+  const sedeIdsRequeridos = useMemo(
+    () => Array.from(new Set(items.map((i) => i.onlySedeId).filter((id): id is string => Boolean(id)))),
+    [items]
+  );
+  const hayRestriccionSede = sedeIdsRequeridos.length > 0;
+  const sedesPermitidas = hayRestriccionSede ? sedes.filter((s) => sedeIdsRequeridos.includes(s.id)) : sedes;
+
+  // Si solo hay una sede posible, se preselecciona directamente (sin pedirle
+  // a la persona que elija zona/sede). Ajuste de estado durante el render,
+  // mismo patrón ya usado en Navbar, para no disparar el warning de efectos.
+  if (modalidad === "sede" && hayRestriccionSede && sedesPermitidas.length === 1 && sedeId !== sedesPermitidas[0].id) {
+    setSedeId(sedesPermitidas[0].id);
+  }
+
   function handleClose() {
     closeCart();
     // Pequeño respiro antes de resetear el paso, para que no se vea el salto
@@ -96,7 +115,14 @@ export function CartDrawer() {
 
   function construirMensaje() {
     const lineas: string[] = [];
-    const examenesTexto = items.map((i) => `• ${i.name}`).join("\n");
+    // Para cada ítem con sede exclusiva (ecógrafo, rayos X), se aclara en el
+    // mensaje que ya sé que solo se puede en esa sede.
+    const examenesTexto = items
+      .map((i) => {
+        const nota = sedeExclusivaTexto(i);
+        return nota ? `• ${i.name} (${nota})` : `• ${i.name}`;
+      })
+      .join("\n");
     if (modalidad === "sede" && sedeSeleccionada) {
       lineas.push("Hola, quiero agendar una cita para los siguientes análisis:", "", examenesTexto, "");
       lineas.push(`Fecha deseada: ${fechaFormateada}`);
@@ -173,30 +199,45 @@ export function CartDrawer() {
               </p>
             ) : (
               <ul className="space-y-3">
-                {items.map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex items-start justify-between gap-3 rounded-2xl border border-munoz-navy/10 p-4"
-                  >
-                    <div>
-                      <p className="text-sm font-semibold text-munoz-navy">{item.name}</p>
-                      <span className="text-xs text-munoz-navy/45">{categoryLabel[item.category]}</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeItem(item.id)}
-                      aria-label={`Quitar ${item.name}`}
-                      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-munoz-navy/40 hover:bg-red-50 hover:text-red-500 ${focus}`}
+                {items.map((item) => {
+                  const notaSede = sedeExclusivaTexto(item);
+                  return (
+                    <li
+                      key={item.id}
+                      className="flex items-start justify-between gap-3 rounded-2xl border border-munoz-navy/10 p-4"
                     >
-                      <Trash2 size={15} aria-hidden />
-                    </button>
-                  </li>
-                ))}
+                      <div>
+                        <p className="text-sm font-semibold text-munoz-navy">{item.name}</p>
+                        <span className="text-xs text-munoz-navy/45">{categoryLabel[item.category]}</span>
+                        {notaSede && (
+                          <span className="mt-1.5 flex items-center gap-1 text-xs font-semibold text-munoz-green">
+                            <MapPin size={11} aria-hidden /> {notaSede}
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.id)}
+                        aria-label={`Quitar ${item.name}`}
+                        className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-munoz-navy/40 hover:bg-red-50 hover:text-red-500 ${focus}`}
+                      >
+                        <Trash2 size={15} aria-hidden />
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             ))}
 
           {paso === "modalidad" && (
             <div className="space-y-3">
+              {hayRestriccionSede && (
+                <p className="flex items-start gap-2 rounded-xl bg-munoz-blue/8 px-3.5 py-3 text-sm text-munoz-navy/70">
+                  <Info size={15} className="mt-0.5 shrink-0 text-munoz-blue" aria-hidden />
+                  Tu carrito incluye un equipo (ecógrafo o rayos X) que solo está disponible en{" "}
+                  {sedesPermitidas.map((s) => s.name).join(", ")}, así que la cita debe ser en esa sede.
+                </p>
+              )}
               <button
                 type="button"
                 onClick={() => {
@@ -215,24 +256,56 @@ export function CartDrawer() {
               </button>
               <button
                 type="button"
+                disabled={hayRestriccionSede}
                 onClick={() => {
                   setModalidad("domicilio");
                   setPaso("detalle");
                 }}
-                className={`flex w-full items-start gap-3 rounded-2xl border-2 border-munoz-navy/10 p-4 text-left transition-colors hover:border-munoz-green/40 ${focus}`}
+                className={`flex w-full items-start gap-3 rounded-2xl border-2 border-munoz-navy/10 p-4 text-left transition-colors hover:border-munoz-green/40 disabled:pointer-events-none disabled:opacity-40 ${focus}`}
               >
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-munoz-green/10 text-munoz-green">
                   <Home size={18} aria-hidden />
                 </span>
                 <div>
                   <p className="font-semibold text-munoz-navy">Atención a domicilio</p>
-                  <p className="mt-0.5 text-sm text-munoz-navy/55">Vamos a tomar tus muestras donde estés.</p>
+                  <p className="mt-0.5 text-sm text-munoz-navy/55">
+                    {hayRestriccionSede
+                      ? "No disponible: ese equipo solo funciona en sede."
+                      : "Vamos a tomar tus muestras donde estés."}
+                  </p>
                 </div>
               </button>
             </div>
           )}
 
-          {paso === "detalle" && modalidad === "sede" && (
+          {paso === "detalle" && modalidad === "sede" && hayRestriccionSede && (
+            <div>
+              <p className="flex items-start gap-2 rounded-xl bg-munoz-blue/8 px-3.5 py-3 text-sm text-munoz-navy/70">
+                <Info size={15} className="mt-0.5 shrink-0 text-munoz-blue" aria-hidden />
+                Ese equipo solo está disponible en esta sede, así que tu cita se agenda ahí.
+              </p>
+              <div className="mt-4 space-y-2.5">
+                {sedesPermitidas.map((s) => (
+                  <button
+                    key={s.id}
+                    type="button"
+                    onClick={() => setSedeId(s.id)}
+                    className={`flex w-full items-start gap-2.5 rounded-xl border-2 p-3.5 text-left transition-colors ${focus} ${
+                      sedeId === s.id ? "border-munoz-blue bg-munoz-blue/5" : "border-munoz-navy/10 hover:border-munoz-blue/30"
+                    }`}
+                  >
+                    <MapPin size={15} className="mt-0.5 shrink-0 text-munoz-green" aria-hidden />
+                    <div>
+                      <p className="text-sm font-semibold text-munoz-navy">{s.name}</p>
+                      <p className="text-xs text-munoz-navy/55">{s.address}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {paso === "detalle" && modalidad === "sede" && !hayRestriccionSede && (
             <div>
               <p className="text-sm text-munoz-navy/60">¿En qué zona vives? Te sugerimos la sede más cercana.</p>
               <div className="mt-4 flex flex-wrap gap-2">

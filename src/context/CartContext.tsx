@@ -47,8 +47,15 @@ function getSnapshot(): LabService[] {
 // En el servidor no existe localStorage: el carrito arranca vacío ahí, y
 // useSyncExternalStore se encarga de "ponerse al día" con el valor real del
 // navegador apenas hidrata, sin parpadeos raros ni el warning de React.
+//
+// IMPORTANTE: tiene que devolver SIEMPRE la misma referencia (por eso está
+// fuera de la función, como constante). Si devolviera "[]" literal cada vez
+// que se llama, React vería un arreglo "distinto" en cada render (aunque esté
+// vacío igual) y entraría en un loop infinito — exactamente el warning
+// "getServerSnapshot should be cached".
+const EMPTY_ITEMS: LabService[] = [];
 function getServerSnapshot(): LabService[] {
-  return [];
+  return EMPTY_ITEMS;
 }
 
 function subscribe(callback: Listener) {

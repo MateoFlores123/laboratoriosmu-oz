@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CalendarPlus, ChevronDown, FileText, Menu, ShoppingCart, X } from "lucide-react";
 import { brand, navLinks, resultadosLinks } from "@/config/site";
 import { useCart } from "@/context/CartContext";
+import { ResultadosMenu } from "@/components/ui/ResultadosMenu";
 import { HeaderWave } from "./HeaderWave";
 
 const focus =
@@ -19,10 +20,8 @@ export function Navbar() {
   const { items, openCart } = useCart();
   const quoteCount = items.length;
   const [open, setOpen] = useState(false);
-  const [resultadosOpen, setResultadosOpen] = useState(false);
-  const resultadosRef = useRef<HTMLDivElement>(null);
 
-  // Cierra los menús al navegar, SIN useEffect: siguiendo la guía de React
+  // Cierra el menú móvil al navegar, SIN useEffect: siguiendo la guía de React
   // ("Adjusting state when a prop changes"), se ajusta el estado durante el
   // render comparando con el pathname anterior, en vez de sincronizarlo
   // después con un efecto (lo que generaba el warning de "cascading renders").
@@ -30,27 +29,7 @@ export function Navbar() {
   if (pathname !== prevPathname) {
     setPrevPathname(pathname);
     setOpen(false);
-    setResultadosOpen(false);
   }
-
-  // Cierra el desplegable de resultados al hacer clic afuera o presionar Escape
-  useEffect(() => {
-    if (!resultadosOpen) return;
-    function handleClick(e: MouseEvent) {
-      if (resultadosRef.current && !resultadosRef.current.contains(e.target as Node)) {
-        setResultadosOpen(false);
-      }
-    }
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") setResultadosOpen(false);
-    }
-    document.addEventListener("mousedown", handleClick);
-    document.addEventListener("keydown", handleKey);
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      document.removeEventListener("keydown", handleKey);
-    };
-  }, [resultadosOpen]);
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
@@ -99,40 +78,14 @@ export function Navbar() {
           </button>
 
           {/* Resultados por sede: desplegable con los portales externos */}
-          <div className="relative z-10" ref={resultadosRef}>
-            <button
-              type="button"
-              onClick={() => setResultadosOpen((v) => !v)}
-              aria-haspopup="true"
-              aria-expanded={resultadosOpen}
-              className={`flex h-10 items-center gap-2 rounded-full bg-munoz-blue pl-4 pr-3.5 text-[15px] font-semibold text-white hover:bg-munoz-navy ${focus}`}
+          <div className="relative z-10">
+            <ResultadosMenu
+              align="right"
+              triggerClassName={`flex h-10 items-center gap-2 rounded-full bg-munoz-blue pl-4 pr-3.5 text-[15px] font-semibold text-white hover:bg-munoz-navy ${focus}`}
             >
               <FileText size={17} aria-hidden />
               Resultados
-            </button>
-
-            {resultadosOpen && (
-              <div
-                role="menu"
-                className="absolute right-0 top-[calc(100%+0.5rem)] z-50 w-72 overflow-hidden rounded-2xl border border-munoz-navy/10 bg-white py-2 shadow-xl"
-              >
-                <p className="px-4 pb-1.5 pt-1 text-xs font-bold uppercase tracking-wide text-munoz-navy/40">
-                  Resultados en línea
-                </p>
-                {resultadosLinks.map((r) => (
-                  <a
-                    key={r.href + r.label}
-                    href={r.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    role="menuitem"
-                    className={`block px-4 py-2.5 text-sm text-munoz-navy/75 transition-colors hover:bg-munoz-mist hover:text-munoz-blue ${focus}`}
-                  >
-                    {r.label}
-                  </a>
-                ))}
-              </div>
-            )}
+            </ResultadosMenu>
           </div>
         </div>
 

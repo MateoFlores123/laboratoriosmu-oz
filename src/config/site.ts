@@ -27,12 +27,13 @@ export const navActions = {
 // Servicios destacados en el pie del hero y accesos rápidos del footer. El
 // ícono y el color de cada uno se definen en Hero.tsx a partir del "id".
 //
-// "domicilio" y "resultados" no tienen página propia todavía: los portales
-// reales de resultados por sede ya están en el desplegable "Resultados" del
-// Navbar (ver resultadosLinks más abajo); como son 7 enlaces distintos por
-// sede, este acceso rápido no puede apuntar a uno solo, así que abre
-// WhatsApp para que te ayudemos a encontrar el tuyo (⚠ el número debe
-// coincidir con assistant.whatsapp, más abajo en este archivo).
+// "domicilio" no tiene página propia todavía, así que su acceso rápido abre
+// WhatsApp (⚠ el número debe coincidir con assistant.whatsapp, más abajo en
+// este archivo). "resultados" SÍ tiene un href de respaldo aquí, pero en el
+// Hero (y en cualquier otro lugar donde se use este id) se ignora ese href y
+// en su lugar se abre el mismo desplegable "Resultados" del Navbar —
+// componente <ResultadosMenu> en src/components/ui/ResultadosMenu.tsx— con
+// los 7 portales reales por sede (ver resultadosLinks más abajo).
 export const quickServices = [
   { id: "analisis", label: "Análisis clínicos", href: "/servicios#analisis-clinicos" },
   {

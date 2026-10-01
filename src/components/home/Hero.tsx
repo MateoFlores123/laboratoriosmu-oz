@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { HERO_DURATION_MS, heroSlides } from "@/config/hero";
 import { quickServices } from "@/config/site";
+import { ResultadosMenu } from "@/components/ui/ResultadosMenu";
 
 const focusLight =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
@@ -104,7 +105,7 @@ export function Hero() {
         <div
           aria-roledescription="carrusel"
           aria-label="Servicios destacados"
-          className="relative isolate h-[58svh] min-h-[420px] w-full overflow-hidden rounded-[2rem] bg-munoz-navy shadow-2xl shadow-munoz-navy/20 sm:h-[62svh] sm:rounded-[2.5rem] lg:h-[64svh]"
+          className="relative isolate min-h-[640px] w-full overflow-hidden rounded-[1.5rem] bg-munoz-navy shadow-2xl shadow-munoz-navy/20 sm:h-[62svh] sm:min-h-[480px] sm:rounded-[2.5rem] lg:h-[64svh]"
           onMouseEnter={() => setInteracting(true)}
           onMouseLeave={() => setInteracting(false)}
           onFocusCapture={() => setInteracting(true)}
@@ -139,7 +140,7 @@ export function Hero() {
             type="button"
             onClick={prev}
             aria-label="Servicio anterior"
-            className={`absolute left-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:left-6 ${focusLight}`}
+            className={`absolute left-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:left-6 sm:top-1/2 sm:h-11 sm:w-11 sm:-translate-y-1/2 ${focusLight}`}
           >
             <ArrowLeft size={18} aria-hidden />
           </button>
@@ -147,17 +148,17 @@ export function Hero() {
             type="button"
             onClick={next}
             aria-label="Siguiente servicio"
-            className={`absolute right-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:right-6 ${focusLight}`}
+            className={`absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:right-6 sm:top-1/2 sm:h-11 sm:w-11 sm:-translate-y-1/2 ${focusLight}`}
           >
             <ArrowRight size={18} aria-hidden />
           </button>
 
           {/* Contenido: insignia, titular, texto y botones, hacia la esquina inferior izquierda */}
-          <div className="relative z-10 flex h-full max-w-4xl flex-col justify-end px-6 pb-20 sm:px-10 sm:pb-24 lg:px-14 lg:pb-16">
+          <div className="relative z-10 flex h-full max-w-4xl flex-col justify-center px-6 pb-16 pt-8 sm:justify-end sm:px-10 sm:pb-24 sm:pt-0 lg:px-14 lg:pb-16">
             <div className="max-w-xl">
               <span
                 key={slide.id + "-badge"}
-                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur"
+                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur sm:text-sm"
               >
                 <BadgeIcon size={15} aria-hidden /> {slide.label}
               </span>
@@ -165,29 +166,29 @@ export function Hero() {
               <h1
                 id="hero-title"
                 key={slide.id}
-                className="text-swap mt-5 text-3xl font-bold leading-[1.1] tracking-tight text-white sm:text-4xl lg:text-5xl"
+                className="text-swap mt-4 text-2xl font-bold leading-[1.2] tracking-tight text-white sm:mt-5 sm:text-4xl sm:leading-[1.1] lg:text-5xl"
               >
                 {renderTitle(slide.title, slide.highlight)}
               </h1>
               <p
                 key={slide.id + "-p"}
                 style={{ animationDelay: "90ms" }}
-                className="text-swap mt-5 max-w-lg text-lg leading-relaxed text-white/80"
+                className="text-swap mt-4 max-w-lg text-[15px] leading-relaxed text-white/80 sm:mt-5 sm:text-lg"
               >
                 {slide.text}
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center">
                 <Link
                   key={slide.id + "-cta"}
                   href={slide.cta.href}
-                  className={`rounded-full bg-munoz-green px-7 py-3.5 text-base font-semibold text-white shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 ${focusLight}`}
+                  className={`rounded-full bg-munoz-green px-7 py-3.5 text-center text-base font-semibold text-white shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 sm:text-left ${focusLight}`}
                 >
                   {slide.cta.label}
                 </Link>
                 <Link
                   href="/servicios"
-                  className={`flex items-center gap-2 rounded-full border border-white/40 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10 ${focusLight}`}
+                  className={`flex items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10 sm:justify-start ${focusLight}`}
                 >
                   <CalendarPlus size={19} aria-hidden /> Agendar
                 </Link>
@@ -196,7 +197,7 @@ export function Hero() {
           </div>
 
           {/* Puntos de navegación + pausa, abajo del banner */}
-          <div className="absolute inset-x-0 bottom-8 z-10 flex justify-center px-5 lg:px-10">
+          <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center px-5 sm:bottom-8 lg:px-10">
             <div className="flex items-center gap-2">
               {heroSlides.map((s, i) => (
                 <button
@@ -238,14 +239,28 @@ export function Hero() {
           {quickServices.map((service, i) => {
             const s = serviceStyleById[service.id];
             const featured = i === 0;
+            const cardClassName = `flex h-full w-full items-center gap-4 rounded-2xl border px-6 py-6 text-left transition-colors ${focusDark} ${
+              featured ? `${s.border} ${s.tint}` : "border-munoz-navy/10 bg-white hover:border-munoz-navy/25"
+            }`;
+
+            // "Resultados en línea" abre el mismo desplegable del Navbar (los
+            // portales reales por sede), en vez de ir a una sola página.
+            if (service.id === "resultados") {
+              return (
+                <li key={service.id} className="h-full">
+                  <ResultadosMenu align="left" wrapperClassName="h-full w-full" triggerClassName={cardClassName}>
+                    <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-full ${s.bg}`}>
+                      <s.Icon size={22} className={s.text} aria-hidden />
+                    </span>
+                    <span className="text-lg font-semibold text-munoz-navy">{service.label}</span>
+                  </ResultadosMenu>
+                </li>
+              );
+            }
+
             return (
               <li key={service.id} className="h-full">
-                <Link
-                  href={service.href}
-                  className={`flex h-full items-center gap-4 rounded-2xl border px-6 py-6 transition-colors ${focusDark} ${
-                    featured ? `${s.border} ${s.tint}` : "border-munoz-navy/10 bg-white hover:border-munoz-navy/25"
-                  }`}
-                >
+                <Link href={service.href} className={cardClassName}>
                   <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-full ${s.bg}`}>
                     <s.Icon size={22} className={s.text} aria-hidden />
                   </span>

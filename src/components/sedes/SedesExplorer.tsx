@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { CalendarPlus, MapPin, Phone, Search } from "lucide-react";
+import { CalendarPlus, FileText, MapPin, Phone, Search } from "lucide-react";
 import { sedes, type Sede } from "@/config/sedes";
 import { navActions } from "@/config/site";
+import { ResultadosMenu } from "@/components/ui/ResultadosMenu";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue";
@@ -130,12 +131,20 @@ export function SedesExplorer() {
                         >
                           <Phone size={13} aria-hidden /> {s.phoneDisplay}
                         </a>
-                        <Link
-                          href={navActions.agendar}
-                          className={`ml-auto flex items-center gap-1.5 rounded-full bg-munoz-blue px-4 py-1.5 text-sm font-semibold text-white hover:bg-munoz-navy ${focus}`}
-                        >
-                          <CalendarPlus size={14} aria-hidden /> Agendar cita
-                        </Link>
+                        <div className="ml-auto flex items-center gap-2">
+                          <ResultadosMenu
+                            align="right"
+                            triggerClassName={`flex items-center gap-1.5 rounded-full border border-munoz-blue px-4 py-1.5 text-sm font-semibold text-munoz-blue hover:bg-munoz-blue hover:text-white ${focus}`}
+                          >
+                            <FileText size={14} aria-hidden /> Ver resultados
+                          </ResultadosMenu>
+                          <Link
+                            href={navActions.agendar}
+                            className={`flex items-center gap-1.5 rounded-full bg-munoz-blue px-4 py-1.5 text-sm font-semibold text-white hover:bg-munoz-navy ${focus}`}
+                          >
+                            <CalendarPlus size={14} aria-hidden /> Agendar cita
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </li>

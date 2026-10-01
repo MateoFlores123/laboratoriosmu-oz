@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ShoppingCart } from "lucide-react";
+import { Check, MapPin, ShoppingCart } from "lucide-react";
 import { innovations } from "@/config/innovations";
 import { labServices } from "@/config/services";
 import { useCart } from "@/context/CartContext";
+import { sedeExclusivaTexto } from "@/lib/sedeDisponibilidad";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue";
@@ -18,6 +19,7 @@ export function InnovationsBanner() {
       {innovations.map((item) => {
         const service = labServices.find((s) => s.id === item.serviceId);
         const inCart = service ? isInCart(service.id) : false;
+        const notaSede = service ? sedeExclusivaTexto(service) : null;
 
         return (
           <div
@@ -41,6 +43,12 @@ export function InnovationsBanner() {
             <div className="flex flex-1 flex-col justify-center gap-3 p-6 sm:p-8">
               <h2 className="text-xl font-bold text-munoz-navy sm:text-2xl">{item.title}</h2>
               <p className="text-sm leading-relaxed text-munoz-navy/60 sm:text-base">{item.description}</p>
+
+              {notaSede && (
+                <p className="flex items-center gap-1.5 text-sm font-semibold text-munoz-green">
+                  <MapPin size={14} aria-hidden /> {notaSede}
+                </p>
+              )}
 
               <div className="mt-2 flex flex-wrap items-center gap-3">
                 {service && (

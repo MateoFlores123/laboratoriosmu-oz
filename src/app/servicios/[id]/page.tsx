@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ClipboardList, Droplet, Info } from "lucide-react";
+import { ClipboardList, Droplet, Info, MapPin } from "lucide-react";
 import { labServices, serviceCategories, type ServiceCategorySlug } from "@/config/services";
 import { examDetails } from "@/config/examDetails";
 import { ExamDetailActions } from "@/components/servicios/ExamDetailActions";
 import { BackButton } from "@/components/ui/BackButton";
+import { sedeExclusivaTexto } from "@/lib/sedeDisponibilidad";
 
 const categoryLabel: Record<ServiceCategorySlug, string> = Object.fromEntries(
   serviceCategories.map((c) => [c.slug, c.label])
@@ -26,6 +27,7 @@ export default async function ExamDetailPage({ params }: Props) {
   if (!service) notFound();
 
   const detail = examDetails[service.id];
+  const notaSede = sedeExclusivaTexto(service);
 
   return (
     <section className="mx-auto max-w-3xl px-5 py-12 lg:px-10">
@@ -37,6 +39,12 @@ export default async function ExamDetailPage({ params }: Props) {
         {categoryLabel[service.category]}
       </span>
       <h1 className="mt-4 text-3xl font-bold text-munoz-navy sm:text-4xl">{service.name}</h1>
+
+      {notaSede && (
+        <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-munoz-green/30 bg-munoz-green/8 px-4 py-2 text-sm font-semibold text-munoz-green">
+          <MapPin size={15} aria-hidden /> {notaSede}
+        </p>
+      )}
 
       <div className="mt-8 rounded-2xl border border-munoz-navy/10 bg-white p-6 shadow-sm sm:p-8">
         {detail ? (

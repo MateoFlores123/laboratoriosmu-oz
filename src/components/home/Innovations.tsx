@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ScanLine, Sparkles, Waves, type LucideIcon } from "lucide-react";
+import { ArrowRight, MapPin, ScanLine, Sparkles, Waves, type LucideIcon } from "lucide-react";
 import { innovations } from "@/config/innovations";
+import { labServices } from "@/config/services";
+import { sedeExclusivaTexto } from "@/lib/sedeDisponibilidad";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
@@ -97,6 +99,8 @@ export function Innovations() {
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
           {innovations.map((item) => {
             const Icon = iconById[item.id] ?? Sparkles;
+            const service = labServices.find((s) => s.id === item.serviceId);
+            const notaSede = service ? sedeExclusivaTexto(service) : null;
             return (
               <Link
                 key={item.id}
@@ -130,6 +134,11 @@ export function Innovations() {
                   <p className="max-w-sm text-sm leading-relaxed text-white/80 sm:text-base">
                     {item.description}
                   </p>
+                  {notaSede && (
+                    <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-semibold text-white ring-1 ring-white/25 backdrop-blur-md">
+                      <MapPin size={12} aria-hidden /> {notaSede}
+                    </span>
+                  )}
                   <span className="mt-3 inline-flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-bold text-munoz-navy shadow-lg transition-transform duration-300 group-hover:translate-x-1">
                     Ver más información
                     <ArrowRight size={16} aria-hidden />

@@ -30,6 +30,11 @@ export type LabService = {
   id: string;
   name: string;
   category: ServiceCategorySlug;
+  // Solo se usa para equipos/estudios que NO están disponibles en todas las
+  // sedes (por ahora, el ecógrafo y el rayos X, que solo están en Peral).
+  // Es el "id" de una sede real de src/config/sedes.ts. La mayoría de
+  // análisis no tiene este campo porque se toman en cualquier sede.
+  onlySedeId?: string;
 };
 
 // TODO(backend): reemplazar por fetch a la API real del laboratorio
@@ -37,8 +42,8 @@ export type LabService = {
 export const labServices: LabService[] = [
   // Nuevos equipos (no vienen del listado original de 495 exámenes; se
   // agregan aparte porque son equipos, no análisis de laboratorio clásicos).
-  { id: "ecografia-con-inteligencia-artificial", name: "ECOGRAFÍA CON INTELIGENCIA ARTIFICIAL", category: "imagenologia" },
-  { id: "rayos-x-de-ultima-generacion", name: "RAYOS X DE ÚLTIMA GENERACIÓN", category: "imagenologia" },
+  { id: "ecografia-con-inteligencia-artificial", name: "ECOGRAFÍA CON INTELIGENCIA ARTIFICIAL", category: "imagenologia", onlySedeId: "cercado-peral" },
+  { id: "rayos-x-de-ultima-generacion", name: "RAYOS X DE ÚLTIMA GENERACIÓN", category: "imagenologia", onlySedeId: "cercado-peral" },
   { id: "17-hidroxiprogesterona-ser", name: "17 HIDROXIPROGESTERONA SER.", category: "hormonas" },
   { id: "acido-folico-vitamina-b9", name: "ACIDO FOLICO (VITAMINA B9)", category: "vitaminas" },
   { id: "acido-urico-orina-24-hrs", name: "ACIDO URICO (ORINA 24 HRS.)", category: "orina_heces" },
