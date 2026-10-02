@@ -59,7 +59,10 @@ export function Footer() {
   const { openCart } = useCart();
 
   return (
-    <footer className="relative mx-3 overflow-hidden rounded-t-[2.5rem] bg-munoz-navy text-white/70 shadow-2xl shadow-munoz-navy/30 sm:mx-6 sm:rounded-t-[3rem] lg:mx-10">
+    <footer
+      id="site-footer"
+      className="relative mx-3 overflow-hidden rounded-t-[2.5rem] bg-munoz-navy text-white/70 shadow-2xl shadow-munoz-navy/30 sm:mx-6 sm:rounded-t-[3rem] lg:mx-10"
+    >
       {/* Franja de color arriba, la misma que usa el resto del sitio (hero,
           tarjetas de innovaciones), para que el footer se sienta parte de
           la misma marca y no un bloque aparte. */}
