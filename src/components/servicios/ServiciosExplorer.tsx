@@ -94,6 +94,12 @@ export function ServiciosExplorer() {
     });
   }, [query, category]);
 
+  // El anuncio de química y las tarjetas de ecógrafo/rayos X solo se
+  // muestran cuando no se está buscando ni filtrando nada — en cuanto el
+  // usuario busca, estorban; al borrar la búsqueda y volver a "Todas las
+  // categorías", reaparecen.
+  const buscandoAlgo = query.trim() !== "" || category !== "todos";
+
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const shown = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
@@ -165,12 +171,10 @@ export function ServiciosExplorer() {
         </p>
       </div>
 
-      {/* Equipos nuevos (ecógrafo y rayos X con IA), destacados antes del buscador */}
-      <InnovationsBanner />
-
-      {/* Buscador + filtros: AHORA sticky, debajo del navbar (que mide 5rem
-          / top-20), para que no se pierda al bajar entre las nuevas tarjetas
-          de novedades y la lista de +490 análisis. */}
+      {/* Buscador + filtros: va ANTES del anuncio de química/equipos nuevos
+          (para que no se pierda apenas se entra a la página) y sticky,
+          debajo del navbar (que mide 5rem / top-20), para que siga a la
+          vista al bajar entre las novedades y la lista de +490 análisis. */}
       <div className="sticky top-20 z-30 mx-auto mt-10 max-w-[70rem] px-5 lg:px-10">
         <div className="animate-fade-up rounded-2xl border border-munoz-navy/10 bg-white/95 p-3 shadow-md backdrop-blur-sm">
           <div className="relative">
@@ -226,6 +230,15 @@ export function ServiciosExplorer() {
           </div>
         </div>
       </div>
+
+      {/* Anuncio de química e inmunobioquímica + equipos nuevos (ecógrafo y
+          rayos X con IA), debajo del buscador — se ocultan en cuanto hay una
+          búsqueda o filtro activo, para no estorbar en los resultados. */}
+      {!buscandoAlgo && (
+        <div className="animate-fade-up mt-10">
+          <InnovationsBanner />
+        </div>
+      )}
 
       {/* Resultados + lista (ya NO sticky, solo el buscador de arriba) */}
       <div className="relative mx-auto mt-6 max-w-[70rem] px-5 lg:px-10">

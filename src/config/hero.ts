@@ -57,4 +57,18 @@ export const heroSlides: HeroSlide[] = [
     alt: "Equipo de rayos X de última generación en una de nuestras sedes",
     cta: { label: "Más información", href: "/servicios" },
   },
+  {
+    // TODO(backend/contenido): falta una imagen propia para este slide (no es
+    // un equipo visible). Por ahora reutiliza la misma foto/placeholder del
+    // anuncio en /servicios (src/config/innovations.ts); reemplázala cuando
+    // haya una imagen o gráfico ilustrativo del área de procesamiento.
+    id: "quimica",
+    label: "Nueva tecnología",
+    title: "Química e Inmunobioquímica renovada: tus resultados, mucho más rápido",
+    highlight: "mucho más rápido",
+    text: "Actualizamos el sistema con el que procesamos tus análisis de química sanguínea e inmunología. Se usa en todos tus análisis, en todas nuestras sedes.",
+    image: "/innovaciones/quimica-inmunobioquimica.jpg",
+    alt: "Área de química e inmunobioquímica del laboratorio",
+    cta: { label: "Conocer más", href: "/servicios" },
+  },
 ];

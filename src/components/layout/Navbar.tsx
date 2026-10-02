@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { CalendarPlus, ChevronDown, FileText, Menu, ShoppingCart, X } from "lucide-react";
-import { brand, navLinks, resultadosLinks } from "@/config/site";
+import { CalendarPlus, FileText, Menu, ShoppingCart, X } from "lucide-react";
+import { brand, navLinks } from "@/config/site";
 import { useCart } from "@/context/CartContext";
 import { ResultadosMenu } from "@/components/ui/ResultadosMenu";
 import { HeaderWave } from "./HeaderWave";
@@ -89,17 +89,43 @@ export function Navbar() {
           </div>
         </div>
 
-        {/* Botón hamburguesa (móvil) */}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="menu-movil"
-          aria-label={open ? "Cerrar menú" : "Abrir menú"}
-          className={`grid h-11 w-11 place-items-center rounded-full text-munoz-navy lg:hidden ${focus}`}
-        >
-          {open ? <X size={24} aria-hidden /> : <Menu size={24} aria-hidden />}
-        </button>
+        {/* Cotizar + Resultados + hamburguesa (móvil): antes estos dos solo
+            vivían dentro del menú desplegable y había que abrirlo para
+            llegar a ellos; ahora quedan a la vista junto al botón de menú. */}
+        <div className="flex items-center gap-1.5 lg:hidden">
+          <button
+            type="button"
+            onClick={openCart}
+            aria-label={`Cotizar${quoteCount > 0 ? `, ${quoteCount} análisis en el carrito` : ""}`}
+            className={`relative grid h-11 w-11 place-items-center rounded-full text-munoz-navy hover:bg-white ${focus}`}
+          >
+            <ShoppingCart size={22} aria-hidden />
+            {quoteCount > 0 && (
+              <span className="absolute right-1 top-1 grid h-4.5 min-w-4.5 place-items-center rounded-full bg-munoz-green px-1 text-[10px] font-bold text-white">
+                {quoteCount}
+              </span>
+            )}
+          </button>
+
+          <ResultadosMenu
+            align="right"
+            triggerClassName={`grid h-11 w-11 place-items-center rounded-full text-munoz-navy hover:bg-white ${focus}`}
+          >
+            <FileText size={21} aria-hidden />
+            <span className="sr-only">Resultados en línea</span>
+          </ResultadosMenu>
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="menu-movil"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            className={`grid h-11 w-11 place-items-center rounded-full text-munoz-navy ${focus}`}
+          >
+            {open ? <X size={24} aria-hidden /> : <Menu size={24} aria-hidden />}
+          </button>
+        </div>
       </nav>
 
       {/* Menú móvil */}
@@ -115,44 +141,15 @@ export function Navbar() {
               </li>
             ))}
           </ul>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            <Link href="/servicios" className="flex items-center justify-center gap-2 rounded-full bg-munoz-blue py-3 font-semibold text-white">
-              <CalendarPlus size={18} aria-hidden /> Agendar
-            </Link>
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                openCart();
-              }}
-              className="flex items-center justify-center gap-2 rounded-full border border-munoz-blue py-3 font-semibold text-munoz-blue"
-            >
-              <ShoppingCart size={18} aria-hidden /> Cotizar{quoteCount > 0 && ` (${quoteCount})`}
-            </button>
-          </div>
-
-          {/* Resultados por sede, como acordeón simple en móvil */}
-          <details className="mt-3 rounded-xl border border-munoz-navy/10">
-            <summary className={`flex cursor-pointer items-center justify-between px-4 py-3 text-sm font-semibold text-munoz-navy ${focus}`}>
-              <span className="flex items-center gap-2">
-                <FileText size={16} aria-hidden /> Resultados en línea
-              </span>
-              <ChevronDown size={16} aria-hidden />
-            </summary>
-            <div className="border-t border-munoz-navy/10 px-2 py-2">
-              {resultadosLinks.map((r) => (
-                <a
-                  key={r.href + r.label}
-                  href={r.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block rounded-lg px-3 py-2.5 text-sm text-munoz-navy/75 hover:bg-white hover:text-munoz-blue"
-                >
-                  {r.label}
-                </a>
-              ))}
-            </div>
-          </details>
+          {/* Cotizar y Resultados ya están siempre visibles junto al botón
+              de menú (arriba), así que aquí solo queda Agendar. */}
+          <Link
+            href="/servicios"
+            onClick={() => setOpen(false)}
+            className="mt-4 flex items-center justify-center gap-2 rounded-full bg-munoz-blue py-3 font-semibold text-white"
+          >
+            <CalendarPlus size={18} aria-hidden /> Agendar
+          </Link>
         </div>
       )}
 

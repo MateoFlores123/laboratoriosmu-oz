@@ -166,13 +166,21 @@ export function ServiciosPromoModal() {
                 )}
               </button>
             )}
-            <Link
-              href={`/servicios/${item.serviceId}`}
-              onClick={close}
-              className={`rounded-full px-1.5 py-1 text-sm font-semibold text-munoz-blue hover:text-munoz-navy ${focus}`}
-            >
-              Ver más información →
-            </Link>
+            {item.serviceId ? (
+              <Link
+                href={`/servicios/${item.serviceId}`}
+                onClick={close}
+                className={`rounded-full px-1.5 py-1 text-sm font-semibold text-munoz-blue hover:text-munoz-navy ${focus}`}
+              >
+                Ver más información →
+              </Link>
+            ) : (
+              item.badge && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-munoz-green/30 bg-munoz-green/8 px-4 py-2 text-sm font-semibold text-munoz-green">
+                  <Check size={14} aria-hidden /> {item.badge}
+                </span>
+              )
+            )}
           </div>
 
           {/* Puntos: a cuál de las 3 novedades se está viendo */}

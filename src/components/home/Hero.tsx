@@ -45,15 +45,24 @@ const serviceStyleById: Record<
   resultados: { Icon: FileSearch, text: "text-munoz-teal", bg: "bg-munoz-teal/10", border: "border-munoz-teal", tint: "bg-munoz-teal/5" },
 };
 
-// Divide el título y resalta en verde la frase indicada en "highlight"
-function renderTitle(title: string, highlight?: string) {
+// Divide el título y resalta en verde la frase indicada en "highlight". Con
+// glow=true (solo en el carrusel, sobre la foto) el verde lleva un filo
+// blanco bien delgado para que no se pierda contra fondos claros; en móvil
+// (texto sobre fondo blanco) no hace falta, por eso es opcional.
+function renderTitle(title: string, highlight?: string, glow?: boolean) {
   if (!highlight) return title;
   const idx = title.indexOf(highlight);
   if (idx === -1) return title;
   return (
     <>
       {title.slice(0, idx)}
-      <span className="text-munoz-green">{highlight}</span>
+      <span
+        className={`text-munoz-green ${
+          glow ? "[text-shadow:0_0_1px_#fff,0_0_4px_rgba(255,255,255,0.75)]" : ""
+        }`}
+      >
+        {highlight}
+      </span>
       {title.slice(idx + highlight.length)}
     </>
   );
@@ -100,12 +109,16 @@ export function Hero() {
 
   return (
     <>
-      {/* Banner con margen: la foto va en un marco redondeado, no pegada a la pantalla */}
-      <section aria-labelledby="hero-title" className="bg-white px-4 pb-2 pt-6 sm:px-6 lg:px-10 lg:pt-10">
+      {/* Banner con margen: la foto va en un marco redondeado, no pegada a la pantalla.
+          En MÓVIL la foto ya no lleva el texto encima (se veía apretado y chocaba
+          con el asistente flotante): solo queda la imagen + flechas + puntos, y el
+          texto (insignia, título, botones) va DEBAJO, en una sección aparte con
+          fondo blanco. En sm+ se mantiene el texto superpuesto sobre la foto. */}
+      <section aria-label={slide.title} className="bg-white px-4 pb-8 pt-6 sm:px-6 sm:pb-2 lg:px-10 lg:pt-10">
         <div
           aria-roledescription="carrusel"
           aria-label="Servicios destacados"
-          className="relative isolate min-h-[640px] w-full overflow-hidden rounded-[1.5rem] bg-munoz-navy shadow-2xl shadow-munoz-navy/20 sm:h-[62svh] sm:min-h-[480px] sm:rounded-[2.5rem] lg:h-[64svh]"
+          className="relative isolate h-[48vh] min-h-[300px] w-full overflow-hidden rounded-[1.5rem] bg-munoz-navy shadow-2xl shadow-munoz-navy/20 sm:h-[62svh] sm:min-h-[480px] sm:rounded-[2.5rem] lg:h-[64svh]"
           onMouseEnter={() => setInteracting(true)}
           onMouseLeave={() => setInteracting(false)}
           onFocusCapture={() => setInteracting(true)}
@@ -131,17 +144,18 @@ export function Hero() {
             </div>
           ))}
 
-          {/* Degradados MUY suaves, solo para que el texto blanco se lea bien
-              encima — las fotos ya no se ven oscurecidas/con velo. */}
-          <div className="absolute inset-0 bg-linear-to-r from-munoz-navy/45 via-munoz-navy/15 to-transparent" />
-          <div className="absolute inset-0 bg-linear-to-t from-munoz-navy/35 via-transparent to-transparent" />
+          {/* Degradado ambiental, muy suave (la foto se mantiene clara). La
+              legibilidad del texto ya NO depende de este degradado: el
+              texto tiene su propio panel de vidrio oscuro, ver más abajo. */}
+          <div className="absolute inset-0 hidden bg-linear-to-r from-munoz-navy/25 via-transparent to-transparent sm:block" />
+          <div className="absolute inset-0 bg-linear-to-t from-munoz-navy/30 via-transparent to-transparent" />
 
           {/* Flechas de navegación manual */}
           <button
             type="button"
             onClick={prev}
             aria-label="Servicio anterior"
-            className={`absolute left-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:left-6 sm:top-1/2 sm:h-11 sm:w-11 sm:-translate-y-1/2 ${focusLight}`}
+            className={`absolute left-4 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:left-6 sm:h-11 sm:w-11 ${focusLight}`}
           >
             <ArrowLeft size={18} aria-hidden />
           </button>
@@ -149,47 +163,47 @@ export function Hero() {
             type="button"
             onClick={next}
             aria-label="Siguiente servicio"
-            className={`absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:right-6 sm:top-1/2 sm:h-11 sm:w-11 sm:-translate-y-1/2 ${focusLight}`}
+            className={`absolute right-4 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:right-6 sm:h-11 sm:w-11 ${focusLight}`}
           >
             <ArrowRight size={18} aria-hidden />
           </button>
 
-          {/* Contenido: insignia, titular, texto y botones, hacia la esquina inferior izquierda */}
-          <div className="relative z-10 flex h-full max-w-4xl flex-col justify-center px-6 pb-16 pt-8 sm:justify-end sm:px-10 sm:pb-24 sm:pt-0 lg:px-14 lg:pb-16">
+          {/* Contenido superpuesto: SOLO desde sm+ (en móvil el texto va
+              debajo de la imagen, ver el bloque después de esta tarjeta) */}
+          <div className="relative z-10 hidden h-full max-w-4xl flex-col justify-end px-10 pb-24 sm:flex sm:px-10 lg:px-14 lg:pb-16">
             <div className="max-w-xl">
               <span
                 key={slide.id + "-badge"}
-                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur sm:text-sm"
+                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-sm font-semibold text-white shadow-sm backdrop-blur"
               >
                 <BadgeIcon size={15} aria-hidden /> {slide.label}
               </span>
 
               <h1
-                id="hero-title"
                 key={slide.id}
-                className="text-swap mt-4 text-2xl font-bold leading-[1.2] tracking-tight text-white [text-shadow:0_2px_12px_rgba(15,59,102,0.55)] sm:mt-5 sm:text-4xl sm:leading-[1.1] lg:text-5xl"
+                className="text-swap mt-5 text-4xl font-bold leading-[1.1] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] lg:text-5xl"
               >
-                {renderTitle(slide.title, slide.highlight)}
+                {renderTitle(slide.title, slide.highlight, true)}
               </h1>
               <p
                 key={slide.id + "-p"}
                 style={{ animationDelay: "90ms" }}
-                className="text-swap mt-4 max-w-lg text-[15px] leading-relaxed text-white/90 [text-shadow:0_1px_8px_rgba(15,59,102,0.5)] sm:mt-5 sm:text-lg"
+                className="text-swap mt-5 max-w-lg text-lg leading-relaxed text-white/90 [text-shadow:0_1px_3px_rgba(15,59,102,0.75)]"
               >
                 {slide.text}
               </p>
 
-              <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center">
+              <div className="mt-8 flex flex-row flex-wrap items-center gap-3">
                 <Link
                   key={slide.id + "-cta"}
                   href={slide.cta.href}
-                  className={`rounded-full bg-munoz-green px-7 py-3.5 text-center text-base font-semibold text-white shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 sm:text-left ${focusLight}`}
+                  className={`rounded-full bg-munoz-green px-7 py-3.5 text-left text-base font-semibold text-white shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 ${focusLight}`}
                 >
                   {slide.cta.label}
                 </Link>
                 <Link
                   href="/servicios"
-                  className={`flex items-center justify-center gap-2 rounded-full border border-white/40 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10 sm:justify-start ${focusLight}`}
+                  className={`flex items-center justify-start gap-2 rounded-full border border-white/40 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10 ${focusLight}`}
                 >
                   <CalendarPlus size={19} aria-hidden /> Agendar
                 </Link>
@@ -228,6 +242,47 @@ export function Hero() {
 
           {/* Franja de color al pie del banner */}
           <div className="absolute inset-x-0 bottom-0 h-1.5 bg-linear-to-r from-munoz-green via-munoz-blue to-munoz-aqua" />
+        </div>
+
+        {/* Texto del slide, SOLO en móvil, debajo de la imagen (fondo blanco,
+            texto en navy en vez de blanco, porque ya no está sobre la foto) */}
+        <div className="pb-2 pt-6 sm:hidden">
+          <span
+            key={slide.id + "-badge-m"}
+            className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/30 bg-munoz-green/10 px-3.5 py-1.5 text-xs font-semibold text-munoz-green"
+          >
+            <BadgeIcon size={14} aria-hidden /> {slide.label}
+          </span>
+
+          <h1
+            key={slide.id + "-m"}
+            className="text-swap mt-3 text-2xl font-bold leading-[1.25] tracking-tight text-munoz-navy"
+          >
+            {renderTitle(slide.title, slide.highlight)}
+          </h1>
+          <p
+            key={slide.id + "-p-m"}
+            style={{ animationDelay: "90ms" }}
+            className="text-swap mt-3 text-[15px] leading-relaxed text-munoz-navy/65"
+          >
+            {slide.text}
+          </p>
+
+          <div className="mt-5 flex flex-col gap-3">
+            <Link
+              key={slide.id + "-cta-m"}
+              href={slide.cta.href}
+              className={`rounded-full bg-munoz-green px-7 py-3.5 text-center text-base font-semibold text-white shadow-md shadow-munoz-green/20 transition-transform active:scale-[0.98] ${focusDark}`}
+            >
+              {slide.cta.label}
+            </Link>
+            <Link
+              href="/servicios"
+              className={`flex items-center justify-center gap-2 rounded-full border border-munoz-blue px-6 py-3.5 text-base font-semibold text-munoz-blue transition-colors hover:bg-munoz-blue/5 ${focusDark}`}
+            >
+              <CalendarPlus size={19} aria-hidden /> Agendar
+            </Link>
+          </div>
         </div>
       </section>
 

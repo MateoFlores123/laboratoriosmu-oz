@@ -34,14 +34,9 @@ export const examDetails: Record<string, ExamDetail> = {
       "No suele requerir preparación especial; cualquier indicación particular para tu caso se confirma al agendar.",
     ],
   },
-  "quimica-e-inmunobioquimica": {
-    description:
-      "Nuevo sistema de química e inmunobioquímica del laboratorio, que procesa tus análisis de química sanguínea e inmunología con mayor automatización, entregando resultados mucho más rápido. No es un examen en sí mismo: es la tecnología con la que se procesan tus análisis de química e inmunología.",
-    muestra: "Depende del análisis específico que te hayan indicado (generalmente muestra de sangre).",
-    requisitos: [
-      "La preparación (ayuno u otra indicación) depende del análisis puntual que te pidan; se confirma contigo al momento de agendar.",
-    ],
-  },
+  // "quimica-e-inmunobioquimica" ya no es un servicio del catálogo (ver la
+  // nota en services.ts) por lo que no necesita ficha aquí; solo se anuncia
+  // como novedad en /servicios y en el inicio.
   "hemograma-automatizado": {
     description:
       "Cuenta y evalúa los glóbulos rojos, glóbulos blancos y plaquetas. Ayuda a detectar anemia, infecciones, procesos inflamatorios y otros trastornos de la sangre.",

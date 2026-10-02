@@ -20,24 +20,28 @@ export function ExamDetailActions({ service }: { service: LabService }) {
         <button
           type="button"
           onClick={() => (inCart ? removeItem(service.id) : addItem(service))}
-          className={`inline-flex items-center gap-2 rounded-full border-2 px-6 py-3 text-sm font-bold transition-colors ${focus} ${
+          className={`group inline-flex items-center gap-2 rounded-full border-2 px-6 py-3 text-sm font-bold transition-all duration-300 hover:scale-[1.04] active:scale-[0.97] ${focus} ${
             inCart
-              ? "border-munoz-green bg-munoz-green text-white hover:bg-munoz-green/90"
-              : "border-munoz-blue text-munoz-blue hover:bg-munoz-blue hover:text-white"
+              ? "border-munoz-green bg-munoz-green text-white shadow-md shadow-munoz-green/25 hover:bg-munoz-green/90"
+              : "border-munoz-blue text-munoz-blue hover:bg-munoz-blue hover:text-white hover:shadow-md hover:shadow-munoz-blue/25"
           }`}
         >
           {inCart ? (
             <>
-              <Check size={16} aria-hidden /> En el carrito
+              <Check size={16} aria-hidden className="transition-transform duration-300 group-hover:scale-110" /> En el carrito
             </>
           ) : (
             <>
-              <ShoppingCart size={16} aria-hidden /> Agregar al carrito
+              <ShoppingCart size={16} aria-hidden className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-[-8deg]" />{" "}
+              Agregar al carrito
             </>
           )}
         </button>
-        <Link href="/servicios" className={`text-sm font-semibold text-munoz-navy/50 hover:text-munoz-blue ${focus}`}>
-          ← Volver a servicios
+        <Link
+          href="/servicios"
+          className={`group inline-flex items-center gap-1 text-sm font-semibold text-munoz-navy/50 transition-colors hover:text-munoz-blue ${focus}`}
+        >
+          <span className="transition-transform duration-300 group-hover:-translate-x-1">←</span> Volver a servicios
         </Link>
       </div>
 

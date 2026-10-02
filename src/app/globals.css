@@ -90,3 +90,30 @@ body { color: var(--color-munoz-navy); background: #fff; }
 .animate-drift-reverse {
   animation: drift-reverse 20s ease-in-out infinite;
 }
+
+/* Ficha de detalle de novedades (servicios/[id]): blobs flotantes, anillo
+   de luz girando detrás de la foto, destello al pasar el mouse y el
+   "ping" del punto junto a "Nuevo". */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(8px, -18px); }
+}
+.animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+ 
+@keyframes float-slower {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-10px, 14px); }
+}
+.animate-float-slower { animation: float-slower 11s ease-in-out infinite; }
+ 
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow { animation: spin-slow 16s linear infinite; }
+ 
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+}
+.animate-pulse-ring { animation: pulse-ring 2.4s ease-out infinite; }
+ 
