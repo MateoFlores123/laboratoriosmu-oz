@@ -10,7 +10,7 @@ const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue";
 
 export function ExamDetailActions({ service }: { service: LabService }) {
-  const { addItem, removeItem, isInCart, openCart } = useCart();
+  const { addItem, removeItem, isInCart } = useCart();
   const inCart = isInCart(service.id);
   const notaSede = sedeExclusivaTexto(service);
 
@@ -19,7 +19,7 @@ export function ExamDetailActions({ service }: { service: LabService }) {
       <div className="flex flex-wrap items-center gap-3">
         <button
           type="button"
-          onClick={() => (inCart ? removeItem(service.id) : (addItem(service), openCart()))}
+          onClick={() => (inCart ? removeItem(service.id) : addItem(service))}
           className={`inline-flex items-center gap-2 rounded-full border-2 px-6 py-3 text-sm font-bold transition-colors ${focus} ${
             inCart
               ? "border-munoz-green bg-munoz-green text-white hover:bg-munoz-green/90"

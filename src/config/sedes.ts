@@ -9,6 +9,10 @@ export type Sede = {
   address: string;
   phone: string; // solo dígitos, con código de país, para tel: y wa.me
   phoneDisplay: string;
+  // Algunas sedes (Peral, Yanahuara) también tienen un fijo además del
+  // celular. Opcional: se muestra solo si existe.
+  phoneAlt?: string;
+  phoneAltDisplay?: string;
 };
 
 // Sedes reales del laboratorio (de la web actual). Cuando exista el backend,
@@ -20,8 +24,10 @@ export const sedes: Sede[] = [
     city: "Arequipa",
     zone: "Cercado",
     address: "Calle Peral 215, Cercado, Arequipa",
-    phone: "51993501938",
-    phoneDisplay: "993 501 938",
+    phone: "51958918553",
+    phoneDisplay: "958 918 553",
+    phoneAlt: "5154243098",
+    phoneAltDisplay: "054 243098",
   },
   {
     id: "yanahuara",
@@ -31,24 +37,8 @@ export const sedes: Sede[] = [
     address: "Urb. Valencia H-6, Parque del Avión, Yanahuara, Arequipa",
     phone: "51991124838",
     phoneDisplay: "991 124 838",
-  },
-  {
-    id: "cercado-honorio-delgado",
-    name: "Cercado — Honorio Delgado",
-    city: "Arequipa",
-    zone: "Cercado",
-    address: "Urb. Pablo VI C-9, frente al Hospital Honorio Delgado, Arequipa",
-    phone: "51989505045",
-    phoneDisplay: "989 505 045",
-  },
-  {
-    id: "pedregal",
-    name: "Pedregal",
-    city: "Arequipa",
-    zone: "Pedregal",
-    address: "Av. Zamácola Mz H Lote 3, Pedregal, Arequipa",
-    phone: "51930617364",
-    phoneDisplay: "930 617 364",
+    phoneAlt: "5154255793",
+    phoneAltDisplay: "054 255793",
   },
   {
     id: "cerro-colorado",
@@ -60,13 +50,26 @@ export const sedes: Sede[] = [
     phoneDisplay: "993 501 938",
   },
   {
-    id: "lima-sjm",
-    name: "San Juan de Miraflores",
+    // TODO(backend/contenido): falta la dirección exacta (calle y número) de
+    // esta sede — solo se confirmó que existe (tiene su propio portal de
+    // resultados: labmunozeu.resultados.ingenius.online) y su teléfono. No
+    // se inventa el número de calle hasta tenerlo.
+    id: "estados-unidos",
+    name: "Av. Estados Unidos",
+    city: "Arequipa",
+    zone: "Estados Unidos",
+    address: "Av. Estados Unidos 304, Arequipa",
+    phone: "51956731140",
+    phoneDisplay: "956 731 140",
+  },
+  {
+    id: "lima-jesus-maria",
+    name: "Lima — Jesús María",
     city: "Lima",
-    zone: "San Juan de Miraflores",
-    address: "Calle Maximiliano Carranza 1194, San Juan de Miraflores, Lima",
-    phone: "51957218309",
-    phoneDisplay: "957 218 309",
+    zone: "Jesús María",
+    address: "Av. Ricardo Tizón y Bueno 150, Jesús María, Lima",
+    phone: "51947266803",
+    phoneDisplay: "947 266 803",
   },
 ];
 

@@ -7,6 +7,7 @@ import { labServices, serviceCategories, type ServiceCategorySlug } from "@/conf
 import { examDetails } from "@/config/examDetails";
 import { useCart } from "@/context/CartContext";
 import { InnovationsBanner } from "./InnovationsBanner";
+import { ServiciosPromoModal } from "./ServiciosPromoModal";
 
 const PAGE_SIZE = 25;
 
@@ -79,7 +80,7 @@ function BackToTop() {
 }
 
 export function ServiciosExplorer() {
-  const { addItem, removeItem, isInCart, openCart } = useCart();
+  const { addItem, removeItem, isInCart } = useCart();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<ServiceCategorySlug | "todos">("todos");
   const [page, setPage] = useState(1);
@@ -167,9 +168,11 @@ export function ServiciosExplorer() {
       {/* Equipos nuevos (ecógrafo y rayos X con IA), destacados antes del buscador */}
       <InnovationsBanner />
 
-      {/* Buscador + filtros */}
-      <div className="relative mx-auto mt-10 max-w-[70rem] px-5 lg:px-10">
-        <div className="animate-fade-up rounded-2xl border border-munoz-navy/10 bg-white p-3 shadow-sm">
+      {/* Buscador + filtros: AHORA sticky, debajo del navbar (que mide 5rem
+          / top-20), para que no se pierda al bajar entre las nuevas tarjetas
+          de novedades y la lista de +490 análisis. */}
+      <div className="sticky top-20 z-30 mx-auto mt-10 max-w-[70rem] px-5 lg:px-10">
+        <div className="animate-fade-up rounded-2xl border border-munoz-navy/10 bg-white/95 p-3 shadow-md backdrop-blur-sm">
           <div className="relative">
             <Search
               size={18}
@@ -222,9 +225,11 @@ export function ServiciosExplorer() {
             />
           </div>
         </div>
+      </div>
 
-        {/* Resultados */}
-        <p id="resultados-servicios" className="mt-6 scroll-mt-24 text-sm font-semibold text-munoz-navy/50">
+      {/* Resultados + lista (ya NO sticky, solo el buscador de arriba) */}
+      <div className="relative mx-auto mt-6 max-w-[70rem] px-5 lg:px-10">
+        <p id="resultados-servicios" className="scroll-mt-24 text-sm font-semibold text-munoz-navy/50">
           {filtered.length} resultado{filtered.length !== 1 ? "s" : ""} encontrado
           {filtered.length !== 1 ? "s" : ""}
         </p>
@@ -262,7 +267,7 @@ export function ServiciosExplorer() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => (inCart ? removeItem(s.id) : (addItem(s), openCart()))}
+                    onClick={() => (inCart ? removeItem(s.id) : addItem(s))}
                     aria-pressed={inCart}
                     className={`inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border-2 px-5 py-2 text-sm font-semibold transition-colors ${focus} ${
                       inCart
@@ -334,6 +339,9 @@ export function ServiciosExplorer() {
           </nav>
         )}
       </div>
+
+      {/* Aviso de las 3 novedades, una sola vez por sesión al entrar aquí */}
+      <ServiciosPromoModal />
     </section>
   );
 }

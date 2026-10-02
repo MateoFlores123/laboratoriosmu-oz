@@ -37,8 +37,14 @@ function buildParticles(count: number) {
   }));
 }
 
+// El inicio solo destaca los dos EQUIPOS nuevos (ecógrafo y rayos X); la
+// química e inmunobioquímica se promociona en /servicios (no es un equipo
+// "visible" como estos dos). Ver nota en src/config/innovations.ts.
+const idsEnInicio = ["ecografo", "rayosx"];
+
 export function Innovations() {
   const particles = buildParticles(26);
+  const itemsInicio = innovations.filter((i) => idsEnInicio.includes(i.id));
 
   return (
     <section
@@ -97,7 +103,7 @@ export function Innovations() {
             contenido flotando encima sobre un degradado oscuro, estilo
             portada de revista/producto premium. */}
         <div className="mt-12 grid gap-8 lg:grid-cols-2">
-          {innovations.map((item) => {
+          {itemsInicio.map((item) => {
             const Icon = iconById[item.id] ?? Sparkles;
             const service = labServices.find((s) => s.id === item.serviceId);
             const notaSede = service ? sedeExclusivaTexto(service) : null;
@@ -114,8 +120,9 @@ export function Innovations() {
                   sizes="(min-width: 1024px) 45vw, 100vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                 />
-                {/* Degradado oscuro para que el texto blanco se lea bien */}
-                <div className="absolute inset-0 bg-linear-to-t from-munoz-navy via-munoz-navy/55 to-munoz-navy/5" />
+                {/* Degradado MUCHO más suave (solo para que el texto se lea),
+                    la foto ya no se ve oscurecida por un velo encima. */}
+                <div className="absolute inset-0 bg-linear-to-t from-munoz-navy/80 via-munoz-navy/25 to-transparent" />
                 {/* Acento de color en la esquina, como el resto de la marca */}
                 <div
                   aria-hidden
@@ -130,8 +137,8 @@ export function Innovations() {
                   <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/15 text-white ring-1 ring-white/25 backdrop-blur-md">
                     <Icon size={22} aria-hidden />
                   </span>
-                  <h3 className="text-2xl font-bold text-white sm:text-3xl">{item.title}</h3>
-                  <p className="max-w-sm text-sm leading-relaxed text-white/80 sm:text-base">
+                  <h3 className="text-2xl font-bold text-white [text-shadow:0_2px_10px_rgba(15,59,102,0.6)] sm:text-3xl">{item.title}</h3>
+                  <p className="max-w-sm text-sm leading-relaxed text-white/90 [text-shadow:0_1px_6px_rgba(15,59,102,0.55)] sm:text-base">
                     {item.description}
                   </p>
                   {notaSede && (

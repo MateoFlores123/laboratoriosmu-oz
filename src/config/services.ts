@@ -2,10 +2,11 @@
 // de exámenes (495 en total). Cuando exista backend, este archivo se reemplaza
 // por la consulta a /servicios (o al catálogo real, con precios y disponibilidad).
 export type ServiceCategorySlug =
-  "perfiles" | "hormonas" | "bioquimica" | "hematologia" | "coagulacion" | "anticuerpos" | "infecciosas" | "parasitologia" | "cultivos" | "marcadores" | "vitaminas" | "orina_heces" | "liquidos" | "toxicologia" | "alergias" | "fertilidad" | "genetica" | "vacunas" | "imagenologia";
+  "perfiles" | "hormonas" | "bioquimica" | "hematologia" | "coagulacion" | "anticuerpos" | "infecciosas" | "parasitologia" | "cultivos" | "marcadores" | "vitaminas" | "orina_heces" | "liquidos" | "toxicologia" | "alergias" | "fertilidad" | "genetica" | "vacunas" | "imagenologia" | "quimica_rapida";
 
 export const serviceCategories: { slug: ServiceCategorySlug; label: string }[] = [
   { slug: "imagenologia", label: "Imagenología con IA" },
+  { slug: "quimica_rapida", label: "Química e Inmunobioquímica" },
   { slug: "perfiles", label: "Perfiles y chequeos" },
   { slug: "hormonas", label: "Hormonas y endocrinología" },
   { slug: "bioquimica", label: "Química clínica general" },
@@ -44,6 +45,10 @@ export const labServices: LabService[] = [
   // agregan aparte porque son equipos, no análisis de laboratorio clásicos).
   { id: "ecografia-con-inteligencia-artificial", name: "ECOGRAFÍA CON INTELIGENCIA ARTIFICIAL", category: "imagenologia", onlySedeId: "cercado-peral" },
   { id: "rayos-x-de-ultima-generacion", name: "RAYOS X DE ÚLTIMA GENERACIÓN", category: "imagenologia", onlySedeId: "cercado-peral" },
+  // Nuevo sistema de química e inmunobioquímica: no es un examen puntual
+  // sino una mejora general (resultados mucho más rápidos). Disponible en
+  // todas las sedes, por eso NO lleva onlySedeId.
+  { id: "quimica-e-inmunobioquimica", name: "QUÍMICA E INMUNOBIOQUÍMICA", category: "quimica_rapida" },
   { id: "17-hidroxiprogesterona-ser", name: "17 HIDROXIPROGESTERONA SER.", category: "hormonas" },
   { id: "acido-folico-vitamina-b9", name: "ACIDO FOLICO (VITAMINA B9)", category: "vitaminas" },
   { id: "acido-urico-orina-24-hrs", name: "ACIDO URICO (ORINA 24 HRS.)", category: "orina_heces" },

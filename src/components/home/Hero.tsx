@@ -131,9 +131,10 @@ export function Hero() {
             </div>
           ))}
 
-          {/* Degradados para que el texto blanco sea legible sobre cualquier foto */}
-          <div className="absolute inset-0 bg-linear-to-r from-munoz-navy/95 via-munoz-navy/55 to-munoz-navy/10" />
-          <div className="absolute inset-0 bg-linear-to-t from-munoz-navy/70 via-transparent to-transparent" />
+          {/* Degradados MUY suaves, solo para que el texto blanco se lea bien
+              encima — las fotos ya no se ven oscurecidas/con velo. */}
+          <div className="absolute inset-0 bg-linear-to-r from-munoz-navy/45 via-munoz-navy/15 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-munoz-navy/35 via-transparent to-transparent" />
 
           {/* Flechas de navegación manual */}
           <button
@@ -158,7 +159,7 @@ export function Hero() {
             <div className="max-w-xl">
               <span
                 key={slide.id + "-badge"}
-                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-xs font-semibold text-white backdrop-blur sm:text-sm"
+                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-xs font-semibold text-white shadow-sm backdrop-blur sm:text-sm"
               >
                 <BadgeIcon size={15} aria-hidden /> {slide.label}
               </span>
@@ -166,14 +167,14 @@ export function Hero() {
               <h1
                 id="hero-title"
                 key={slide.id}
-                className="text-swap mt-4 text-2xl font-bold leading-[1.2] tracking-tight text-white sm:mt-5 sm:text-4xl sm:leading-[1.1] lg:text-5xl"
+                className="text-swap mt-4 text-2xl font-bold leading-[1.2] tracking-tight text-white [text-shadow:0_2px_12px_rgba(15,59,102,0.55)] sm:mt-5 sm:text-4xl sm:leading-[1.1] lg:text-5xl"
               >
                 {renderTitle(slide.title, slide.highlight)}
               </h1>
               <p
                 key={slide.id + "-p"}
                 style={{ animationDelay: "90ms" }}
-                className="text-swap mt-4 max-w-lg text-[15px] leading-relaxed text-white/80 sm:mt-5 sm:text-lg"
+                className="text-swap mt-4 max-w-lg text-[15px] leading-relaxed text-white/90 [text-shadow:0_1px_8px_rgba(15,59,102,0.5)] sm:mt-5 sm:text-lg"
               >
                 {slide.text}
               </p>

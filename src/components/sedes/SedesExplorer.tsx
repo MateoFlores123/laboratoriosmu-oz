@@ -131,6 +131,14 @@ export function SedesExplorer() {
                         >
                           <Phone size={13} aria-hidden /> {s.phoneDisplay}
                         </a>
+                        {s.phoneAlt && (
+                          <a
+                            href={`tel:+${s.phoneAlt}`}
+                            className={`flex items-center gap-1.5 text-sm font-medium text-munoz-navy/70 hover:text-munoz-blue ${focus}`}
+                          >
+                            <Phone size={13} aria-hidden /> {s.phoneAltDisplay}
+                          </a>
+                        )}
                         <div className="ml-auto flex items-center gap-2">
                           <ResultadosMenu
                             align="right"

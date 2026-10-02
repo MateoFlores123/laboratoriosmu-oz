@@ -58,15 +58,16 @@ export const locations = {
     sedes: [
       "Cercado — Calle Peral 215",
       "Yanahuara — Parque del Avión",
-      "Cercado — frente al Hospital Honorio Delgado",
-      "Pedregal — Av. Zamácola",
       "Cerro Colorado — Av. Pumacahua",
+      // TODO(backend/contenido): falta el número exacto de esta sede (ver
+      // nota en src/config/sedes.ts); reemplaza a la antigua sede de Pedregal.
+      "Av. Estados Unidos (reemplaza a Pedregal)",
     ],
   },
   lima: {
     phone: "957218309",
     phoneDisplay: "957 218 309",
-    sedes: ["San Juan de Miraflores — Calle Maximiliano Carranza 1194"],
+    sedes: ["Jesús María — Av. Ricardo Tizón y Bueno 150"],
   },
 };
 
