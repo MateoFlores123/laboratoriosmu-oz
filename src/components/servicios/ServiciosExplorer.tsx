@@ -7,7 +7,6 @@ import { labServices, serviceCategories, type ServiceCategorySlug } from "@/conf
 import { examDetails } from "@/config/examDetails";
 import { useCart } from "@/context/CartContext";
 import { InnovationsBanner } from "./InnovationsBanner";
-import { ServiciosPromoModal } from "./ServiciosPromoModal";
 
 const PAGE_SIZE = 25;
 
@@ -352,9 +351,6 @@ export function ServiciosExplorer() {
           </nav>
         )}
       </div>
-
-      {/* Aviso de las 3 novedades, una sola vez por sesión al entrar aquí */}
-      <ServiciosPromoModal />
     </section>
   );
 }
