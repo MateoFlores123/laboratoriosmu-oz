@@ -55,7 +55,7 @@ export const innovations: Innovation[] = [
     // Sin serviceId a propósito: es un anuncio, no un examen que se agregue
     // al carrito ni tenga ficha propia (ver la nota del type Innovation arriba).
     id: "quimica",
-    title: "Química e Inmunobioquímica",
+    title: "Química e Inmunoquímica",
     description:
       "Renovamos el sistema de química e inmunobioquímica del laboratorio: así procesamos tus análisis de química sanguínea e inmunología con mayor automatización, para que tus resultados estén listos mucho más rápido. Se usa en todos los análisis y servicios, en todas nuestras sedes.",
     image: "/innovaciones/quimica-inmunobioquimica.jpg",

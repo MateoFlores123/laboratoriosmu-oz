@@ -64,7 +64,7 @@ export const heroSlides: HeroSlide[] = [
     // haya una imagen o gráfico ilustrativo del área de procesamiento.
     id: "quimica",
     label: "Nueva tecnología",
-    title: "Química e Inmunobioquímica: resultados mucho más rápido",
+    title: "Química e Inmunoquímica: resultados mucho más rápido",
     highlight: "mucho más rápido",
     text: "Actualizamos el sistema con el que procesamos tus análisis de química sanguínea e inmunología. Se usa en todos tus análisis, en todas nuestras sedes.",
     image: "/innovaciones/quimica-inmunobioquimica.jpg",
