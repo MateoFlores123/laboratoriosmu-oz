@@ -47,7 +47,7 @@ export function InnovationsBanner() {
             />
 
             <div className="relative grid gap-0 sm:grid-cols-[1.1fr_1.4fr] lg:grid-cols-[1fr_1.6fr]">
-              <div className="relative h-48 w-full sm:h-full">
+              <div className="relative h-48 w-full overflow-hidden sm:h-full">
                 <Image
                   src={item.image}
                   alt={item.alt}

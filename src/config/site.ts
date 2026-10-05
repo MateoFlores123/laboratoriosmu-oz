@@ -56,7 +56,7 @@ export const locations = {
     phone: "993501938",
     phoneDisplay: "993 501 938",
     sedes: [
-      "Cercado — Calle Peral 215",
+      "Peral 215 (Sede principal)",
       "Yanahuara — Parque del Avión",
       "Cerro Colorado — Av. Pumacahua",
       // TODO(backend/contenido): falta el número exacto de esta sede (ver

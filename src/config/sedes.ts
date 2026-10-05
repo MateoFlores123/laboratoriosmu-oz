@@ -20,7 +20,7 @@ export type Sede = {
 export const sedes: Sede[] = [
   {
     id: "cercado-peral",
-    name: "Cercado — Peral",
+    name: "Peral (Sede principal)",
     city: "Arequipa",
     zone: "Cercado",
     address: "Calle Peral 215, Cercado, Arequipa",
@@ -58,7 +58,7 @@ export const sedes: Sede[] = [
     name: "Av. Estados Unidos",
     city: "Arequipa",
     zone: "Estados Unidos",
-    address: "Av. Estados Unidos 304, Arequipa",
+    address: "Av. Estados Unidos, Arequipa (falta confirmar el número exacto)",
     phone: "51956731140",
     phoneDisplay: "956 731 140",
   },
