@@ -193,7 +193,7 @@ export function Hero() {
 
               <h1
                 key={slide.id}
-                className="text-swap mt-4 text-2xl font-bold leading-[1.2] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] md:mt-5 md:text-3xl lg:text-4xl 2xl:text-5xl"
+                className="text-swap mt-4 text-2xl font-bold leading-[1.2] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] md:mt-5 md:text-3xl lg:text-4xl"
               >
                 {renderTitle(slide.title, slide.highlight, true)}
               </h1>
