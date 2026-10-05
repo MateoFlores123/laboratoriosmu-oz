@@ -41,7 +41,7 @@ export const quickServices = [
     label: "Atención a domicilio",
     href: "https://wa.me/51993501938?text=" + encodeURIComponent("Hola, quisiera información sobre atención a domicilio."),
   },
-  { id: "ocupacional", label: "Salud ocupacional", href: "/servicios#salud-ocupacional" },
+  { id: "medicos", label: "Medicos", href: "/medicos" },
   {
     id: "resultados",
     label: "Resultados en línea",

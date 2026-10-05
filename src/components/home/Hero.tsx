@@ -41,7 +41,7 @@ const serviceStyleById: Record<
 > = {
   analisis: { Icon: FlaskConical, text: "text-munoz-blue", bg: "bg-munoz-blue/10", border: "border-munoz-blue", tint: "bg-munoz-blue/5" },
   domicilio: { Icon: House, text: "text-munoz-green", bg: "bg-munoz-green/10", border: "border-munoz-green", tint: "bg-munoz-green/5" },
-  ocupacional: { Icon: HardHat, text: "text-munoz-navy", bg: "bg-munoz-navy/10", border: "border-munoz-navy", tint: "bg-munoz-navy/5" },
+  medicos: { Icon: HardHat, text: "text-munoz-navy", bg: "bg-munoz-navy/10", border: "border-munoz-navy", tint: "bg-munoz-navy/5" },
   resultados: { Icon: FileSearch, text: "text-munoz-teal", bg: "bg-munoz-teal/10", border: "border-munoz-teal", tint: "bg-munoz-teal/5" },
 };
 

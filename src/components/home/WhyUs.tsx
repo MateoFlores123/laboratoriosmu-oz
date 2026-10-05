@@ -63,7 +63,7 @@ export function WhyUs() {
           <div className="relative h-full w-full overflow-hidden rounded-[2.5rem] shadow-xl shadow-munoz-navy/10">
             {/* TODO: reemplazar por una foto real del equipo o una sede */}
             <Image
-              src="/nosotros/equipo.jpg"
+              src="/nosotros/equipo2.jpg"
               alt="Personal de Laboratorios Muñoz atendiendo a un paciente"
               fill
               sizes="(min-width: 1024px) 45vw, 90vw"

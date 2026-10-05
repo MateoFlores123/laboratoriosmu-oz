@@ -22,16 +22,7 @@ export const heroSlides: HeroSlide[] = [
     alt: "Profesionales del laboratorio revisando resultados en una pantalla",
     cta: { label: "Cotizar mis análisis", href: "/cotizar" },
   },
-  {
-    id: "domicilio",
-    label: "Atención a domicilio",
-    title: "Te tomamos la muestra en casa, todos los días del año",
-    highlight: "todos los días del año",
-    text: "Fuimos los primeros en ofrecer atención a domicilio. Nuestro equipo llega donde estés, los 365 días.",
-    image: "/hero/domicilio.jpg",
-    alt: "Enfermera atendiendo a un paciente en su hogar",
-    cta: { label: "Pedir atención a domicilio", href: "/atencion-a-domicilio" },
-  },
+  
   {
     // TODO(backend/contenido): confirmar nombre exacto del equipo y sede(s) donde
     // está disponible; por ahora el CTA "Más información" enlaza al catálogo
@@ -70,5 +61,15 @@ export const heroSlides: HeroSlide[] = [
     image: "/innovaciones/quimica-inmunobioquimica.jpg",
     alt: "Área de química e inmunobioquímica del laboratorio",
     cta: { label: "Conocer más", href: "/servicios" },
+  },
+  {
+    id: "domicilio",
+    label: "Atención a domicilio",
+    title: "Te tomamos la muestra en casa, todos los días del año",
+    highlight: "todos los días del año",
+    text: "Fuimos los primeros en ofrecer atención a domicilio. Nuestro equipo llega donde estés, los 365 días.",
+    image: "/hero/domicilio.jpg",
+    alt: "Enfermera atendiendo a un paciente en su hogar",
+    cta: { label: "Pedir atención a domicilio", href: "/atencion-a-domicilio" },
   },
 ];
