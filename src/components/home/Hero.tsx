@@ -157,11 +157,15 @@ export function Hero() {
           />
 
           {/* Flechas de navegación manual */}
+          {/* En móvil (sin texto superpuesto) van centradas verticalmente;
+              desde sm+ el texto ocupa toda la mitad inferior izquierda, así
+              que las subimos arriba del todo para que nunca se crucen con
+              las palabras, sin importar cuántas líneas ocupe el título. */}
           <button
             type="button"
             onClick={prev}
             aria-label="Servicio anterior"
-            className={`absolute left-4 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:left-6 sm:h-11 sm:w-11 ${focusLight}`}
+            className={`absolute left-4 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:left-6 sm:top-6 sm:h-11 sm:w-11 sm:translate-y-0 ${focusLight}`}
           >
             <ArrowLeft size={18} aria-hidden />
           </button>
@@ -169,7 +173,7 @@ export function Hero() {
             type="button"
             onClick={next}
             aria-label="Siguiente servicio"
-            className={`absolute right-4 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:right-6 sm:h-11 sm:w-11 ${focusLight}`}
+            className={`absolute right-4 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur transition-colors hover:bg-white/20 sm:right-6 sm:top-6 sm:h-11 sm:w-11 sm:translate-y-0 ${focusLight}`}
           >
             <ArrowRight size={18} aria-hidden />
           </button>
@@ -179,7 +183,7 @@ export function Hero() {
               Pegado a la esquina inferior izquierda, bien compacto, para
               coincidir con el degradado radial de arriba. */}
           <div className="relative z-10 hidden h-full max-w-xl flex-col justify-end px-6 pb-10 sm:flex sm:px-8 md:px-10 md:pb-12 lg:px-14 lg:pb-16">
-            <div className="max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+            <div className="max-w-sm md:max-w-md lg:max-w-xl xl:max-w-xl 2xl:max-w-2xl">
               <span
                 key={slide.id + "-badge"}
                 className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-3 py-1 text-xs font-semibold text-white shadow-sm backdrop-blur md:px-4 md:py-1.5 md:text-sm"
@@ -189,7 +193,7 @@ export function Hero() {
 
               <h1
                 key={slide.id}
-                className="text-swap mt-4 text-2xl font-bold leading-[1.15] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] md:mt-5 md:text-3xl lg:text-4xl xl:text-5xl"
+                className="text-swap mt-4 text-2xl font-bold leading-[1.2] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] md:mt-5 md:text-3xl lg:text-4xl 2xl:text-5xl"
               >
                 {renderTitle(slide.title, slide.highlight, true)}
               </h1>
