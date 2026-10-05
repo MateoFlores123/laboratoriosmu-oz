@@ -41,7 +41,7 @@ const serviceStyleById: Record<
 > = {
   analisis: { Icon: FlaskConical, text: "text-munoz-blue", bg: "bg-munoz-blue/10", border: "border-munoz-blue", tint: "bg-munoz-blue/5" },
   domicilio: { Icon: House, text: "text-munoz-green", bg: "bg-munoz-green/10", border: "border-munoz-green", tint: "bg-munoz-green/5" },
-  medicos: { Icon: HardHat, text: "text-munoz-navy", bg: "bg-munoz-navy/10", border: "border-munoz-navy", tint: "bg-munoz-navy/5" },
+  ocupacional: { Icon: HardHat, text: "text-munoz-navy", bg: "bg-munoz-navy/10", border: "border-munoz-navy", tint: "bg-munoz-navy/5" },
   resultados: { Icon: FileSearch, text: "text-munoz-teal", bg: "bg-munoz-teal/10", border: "border-munoz-teal", tint: "bg-munoz-teal/5" },
 };
 
@@ -118,7 +118,7 @@ export function Hero() {
         <div
           aria-roledescription="carrusel"
           aria-label="Servicios destacados"
-          className="relative isolate h-[48vh] min-h-[300px] w-full overflow-hidden rounded-[1.5rem] bg-munoz-navy shadow-2xl shadow-munoz-navy/20 sm:h-[62svh] sm:min-h-[480px] sm:rounded-[2.5rem] lg:h-[64svh]"
+          className="relative isolate h-[48vh] min-h-[300px] w-full overflow-hidden rounded-[1.5rem] bg-munoz-navy shadow-2xl shadow-munoz-navy/20 sm:h-[56vh] sm:min-h-[380px] sm:rounded-[2.5rem] md:h-[60vh] md:min-h-[440px] lg:h-[64vh] lg:min-h-[500px] xl:h-[66vh] xl:min-h-[560px] 2xl:min-h-[600px]"
           onMouseEnter={() => setInteracting(true)}
           onMouseLeave={() => setInteracting(false)}
           onFocusCapture={() => setInteracting(true)}
@@ -178,42 +178,42 @@ export function Hero() {
               debajo de la imagen, ver el bloque después de esta tarjeta).
               Pegado a la esquina inferior izquierda, bien compacto, para
               coincidir con el degradado radial de arriba. */}
-          <div className="relative z-10 hidden h-full max-w-xl flex-col justify-end px-10 pb-16 sm:flex sm:px-10 lg:px-14 lg:pb-16">
-            <div className="max-w-lg">
+          <div className="relative z-10 hidden h-full max-w-xl flex-col justify-end px-6 pb-10 sm:flex sm:px-8 md:px-10 md:pb-12 lg:px-14 lg:pb-16">
+            <div className="max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
               <span
                 key={slide.id + "-badge"}
-                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-sm font-semibold text-white shadow-sm backdrop-blur"
+                className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-3 py-1 text-xs font-semibold text-white shadow-sm backdrop-blur md:px-4 md:py-1.5 md:text-sm"
               >
-                <BadgeIcon size={15} aria-hidden /> {slide.label}
+                <BadgeIcon size={14} aria-hidden className="md:size-[15px]" /> {slide.label}
               </span>
 
               <h1
                 key={slide.id}
-                className="text-swap mt-5 text-4xl font-bold leading-[1.15] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] lg:text-5xl"
+                className="text-swap mt-4 text-2xl font-bold leading-[1.15] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] md:mt-5 md:text-3xl lg:text-4xl xl:text-5xl"
               >
                 {renderTitle(slide.title, slide.highlight, true)}
               </h1>
               <p
                 key={slide.id + "-p"}
                 style={{ animationDelay: "90ms" }}
-                className="text-swap mt-5 max-w-md text-lg leading-relaxed text-white/90 [text-shadow:0_1px_3px_rgba(15,59,102,0.75)]"
+                className="text-swap mt-3 max-w-md text-sm leading-relaxed text-white/90 [text-shadow:0_1px_3px_rgba(15,59,102,0.75)] md:mt-4 md:text-base lg:mt-5 lg:text-lg"
               >
                 {slide.text}
               </p>
 
-              <div className="mt-8 flex flex-row flex-wrap items-center gap-3">
+              <div className="mt-5 flex flex-row flex-wrap items-center gap-2 md:mt-6 md:gap-3 lg:mt-8">
                 <Link
                   key={slide.id + "-cta"}
                   href={slide.cta.href}
-                  className={`rounded-full bg-munoz-green px-7 py-3.5 text-left text-base font-semibold text-white shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 ${focusLight}`}
+                  className={`rounded-full bg-munoz-green px-5 py-2.5 text-left text-sm font-semibold text-white shadow-xl shadow-black/20 transition-transform hover:-translate-y-0.5 md:px-6 md:py-3 md:text-base lg:px-7 lg:py-3.5 ${focusLight}`}
                 >
                   {slide.cta.label}
                 </Link>
                 <Link
                   href="/servicios"
-                  className={`flex items-center justify-start gap-2 rounded-full border border-white/40 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:bg-white/10 ${focusLight}`}
+                  className={`flex items-center justify-start gap-2 rounded-full border border-white/40 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10 md:px-6 md:py-3 md:text-base lg:py-3.5 ${focusLight}`}
                 >
-                  <CalendarPlus size={19} aria-hidden /> Agendar
+                  <CalendarPlus size={17} aria-hidden className="md:size-[19px]" /> Agendar
                 </Link>
               </div>
             </div>
