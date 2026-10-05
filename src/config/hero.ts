@@ -22,7 +22,16 @@ export const heroSlides: HeroSlide[] = [
     alt: "Profesionales del laboratorio revisando resultados en una pantalla",
     cta: { label: "Cotizar mis análisis", href: "/cotizar" },
   },
-  
+  {
+    id: "domicilio",
+    label: "Atención a domicilio",
+    title: "Te tomamos la muestra en casa, todos los días del año",
+    highlight: "todos los días del año",
+    text: "Fuimos los primeros en ofrecer atención a domicilio. Nuestro equipo llega donde estés, los 365 días.",
+    image: "/hero/domicilio.jpg",
+    alt: "Enfermera atendiendo a un paciente en su hogar",
+    cta: { label: "Pedir atención a domicilio", href: "/atencion-a-domicilio" },
+  },
   {
     // TODO(backend/contenido): confirmar nombre exacto del equipo y sede(s) donde
     // está disponible; por ahora el CTA "Más información" enlaza al catálogo
@@ -55,21 +64,11 @@ export const heroSlides: HeroSlide[] = [
     // haya una imagen o gráfico ilustrativo del área de procesamiento.
     id: "quimica",
     label: "Nueva tecnología",
-    title: "Química e Inmunobioquímica renovada: tus resultados, mucho más rápido",
+    title: "Química e Inmunobioquímica: resultados mucho más rápido",
     highlight: "mucho más rápido",
     text: "Actualizamos el sistema con el que procesamos tus análisis de química sanguínea e inmunología. Se usa en todos tus análisis, en todas nuestras sedes.",
     image: "/innovaciones/quimica-inmunobioquimica.jpg",
     alt: "Área de química e inmunobioquímica del laboratorio",
     cta: { label: "Conocer más", href: "/servicios" },
-  },
-  {
-    id: "domicilio",
-    label: "Atención a domicilio",
-    title: "Te tomamos la muestra en casa, todos los días del año",
-    highlight: "todos los días del año",
-    text: "Fuimos los primeros en ofrecer atención a domicilio. Nuestro equipo llega donde estés, los 365 días.",
-    image: "/hero/domicilio.jpg",
-    alt: "Enfermera atendiendo a un paciente en su hogar",
-    cta: { label: "Pedir atención a domicilio", href: "/atencion-a-domicilio" },
   },
 ];

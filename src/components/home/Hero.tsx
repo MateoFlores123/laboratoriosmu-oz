@@ -144,11 +144,17 @@ export function Hero() {
             </div>
           ))}
 
-          {/* Degradado ambiental, muy suave (la foto se mantiene clara). La
-              legibilidad del texto ya NO depende de este degradado: el
-              texto tiene su propio panel de vidrio oscuro, ver más abajo. */}
-          <div className="absolute inset-0 hidden bg-linear-to-r from-munoz-navy/25 via-transparent to-transparent sm:block" />
-          <div className="absolute inset-0 bg-linear-to-t from-munoz-navy/30 via-transparent to-transparent" />
+          {/* Oscurecido SOLO en la esquina inferior izquierda (donde va el
+              texto): un degradado radial que nace ahí y se desvanece rápido,
+              dejando el resto de la foto (el 90%) completamente limpia. */}
+          <div
+            aria-hidden
+            className="absolute inset-0 hidden sm:block"
+            style={{
+              background:
+                "radial-gradient(ellipse 65% 75% at 2% 100%, rgba(15,59,102,0.65) 0%, rgba(15,59,102,0.32) 40%, transparent 70%)",
+            }}
+          />
 
           {/* Flechas de navegación manual */}
           <button
@@ -169,9 +175,11 @@ export function Hero() {
           </button>
 
           {/* Contenido superpuesto: SOLO desde sm+ (en móvil el texto va
-              debajo de la imagen, ver el bloque después de esta tarjeta) */}
-          <div className="relative z-10 hidden h-full max-w-4xl flex-col justify-end px-10 pb-24 sm:flex sm:px-10 lg:px-14 lg:pb-16">
-            <div className="max-w-xl">
+              debajo de la imagen, ver el bloque después de esta tarjeta).
+              Pegado a la esquina inferior izquierda, bien compacto, para
+              coincidir con el degradado radial de arriba. */}
+          <div className="relative z-10 hidden h-full max-w-xl flex-col justify-end px-10 pb-16 sm:flex sm:px-10 lg:px-14 lg:pb-16">
+            <div className="max-w-lg">
               <span
                 key={slide.id + "-badge"}
                 className="text-swap inline-flex items-center gap-2 rounded-full border border-munoz-green/40 bg-munoz-green/15 px-4 py-1.5 text-sm font-semibold text-white shadow-sm backdrop-blur"
@@ -181,14 +189,14 @@ export function Hero() {
 
               <h1
                 key={slide.id}
-                className="text-swap mt-5 text-4xl font-bold leading-[1.1] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] lg:text-5xl"
+                className="text-swap mt-5 text-4xl font-bold leading-[1.15] tracking-tight text-white [text-shadow:0_1px_3px_rgba(15,59,102,0.85)] lg:text-5xl"
               >
                 {renderTitle(slide.title, slide.highlight, true)}
               </h1>
               <p
                 key={slide.id + "-p"}
                 style={{ animationDelay: "90ms" }}
-                className="text-swap mt-5 max-w-lg text-lg leading-relaxed text-white/90 [text-shadow:0_1px_3px_rgba(15,59,102,0.75)]"
+                className="text-swap mt-5 max-w-md text-lg leading-relaxed text-white/90 [text-shadow:0_1px_3px_rgba(15,59,102,0.75)]"
               >
                 {slide.text}
               </p>
@@ -211,9 +219,12 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Puntos de navegación + pausa, abajo del banner */}
+          {/* Puntos de navegación + pausa, abajo del banner. Llevan su
+              propia "pastilla" de fondo oscuro translúcido, porque el
+              oscurecido general de la foto ya no cubre esta zona (ahora
+              solo está en la esquina inferior izquierda, junto al texto). */}
           <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center px-5 sm:bottom-8 lg:px-10">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 rounded-full bg-munoz-navy/35 px-3 py-1.5 backdrop-blur-sm">
               {heroSlides.map((s, i) => (
                 <button
                   key={s.id}
