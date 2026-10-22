@@ -13,6 +13,8 @@ import {
   Send,
 } from "lucide-react";
 import { CircuitBackground } from "./CircuitBackground";
+import { enviarJson } from "@/lib/api/enviar";
+import { assistant } from "@/config/site";
 
 function Field({
   icon,
@@ -46,10 +48,46 @@ const fieldClass =
 export function RegisterForm() {
   const [submitted, setSubmitted] = useState(false);
 
-  // TODO(backend): reemplazar por POST a /api/medicos/registro con estos datos
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState(false);
+
+  // Envía el JSON a /api/medicos/registro (servidor → endpoint del ingeniero).
+  // Si el endpoint aún no está configurado, el registro no se pierde: se abre
+  // WhatsApp con los datos para que el equipo los reciba igual.
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    const f = new FormData(e.currentTarget);
+    const campo = (k: string) => String(f.get(k) ?? "").trim();
+    const datos = {
+      nombres: campo("nombres"),
+      apellidos: campo("apellidos"),
+      colegiatura: campo("colegiatura"),
+      centro: campo("centro") || null,
+      especialidad: campo("especialidad"),
+      email: campo("email"),
+      whatsapp: campo("whatsapp"),
+    };
+    setEnviando(true);
+    setError(false);
+    const resultado = await enviarJson("/api/medicos/registro", datos);
+    setEnviando(false);
+    if (resultado === "ok") return setSubmitted(true);
+    if (resultado === "no-configurado") {
+      const msg = [
+        "Hola, quiero registrarme como médico aliado:",
+        `Nombre: ${datos.nombres} ${datos.apellidos}`,
+        `Colegiatura: ${datos.colegiatura}`,
+        datos.centro ? `Centro de atención: ${datos.centro}` : "",
+        `Especialidad: ${datos.especialidad}`,
+        `Correo: ${datos.email}`,
+        `WhatsApp: ${datos.whatsapp}`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+      window.open(`https://wa.me/${assistant.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
+      return setSubmitted(true);
+    }
+    setError(true);
   }
 
   return (
@@ -144,11 +182,18 @@ export function RegisterForm() {
                     </Field>
                   </div>
 
+                  {error && (
+                    <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">
+                      No pudimos enviar tu registro. Inténtalo de nuevo en unos minutos o escríbenos por WhatsApp.
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 rounded-full bg-munoz-navy px-7 py-3.5 text-sm font-bold uppercase tracking-wide text-white shadow-lg shadow-munoz-navy/20 transition-transform hover:-translate-y-0.5 hover:bg-munoz-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue"
+                    disabled={enviando}
+                    className="inline-flex items-center gap-2 rounded-full bg-munoz-navy px-7 py-3.5 text-sm font-bold uppercase disabled:opacity-60 tracking-wide text-white shadow-lg shadow-munoz-navy/20 transition-transform hover:-translate-y-0.5 hover:bg-munoz-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue"
                   >
-                    Enviar registro
+                    {enviando ? "Enviando…" : "Enviar registro"}
                     <Send size={15} aria-hidden />
                   </button>
                 </form>

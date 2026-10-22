@@ -32,18 +32,9 @@ export function FrequentTests() {
       />
 
       <div className="relative mx-auto max-w-[90rem]">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 id="frequent-tests-title" className="text-3xl font-bold text-munoz-navy sm:text-4xl">
-            Análisis clínicos más frecuentes
-          </h2>
-          <Link
-            href="/servicios#analisis-clinicos"
-            className={`group flex items-center gap-1 text-base font-semibold text-munoz-blue hover:text-munoz-navy ${focus}`}
-          >
-            Ver todos los análisis clínicos
-            <ChevronRight size={18} className="transition-transform group-hover:translate-x-0.5" aria-hidden />
-          </Link>
-        </div>
+        <h2 id="frequent-tests-title" className="text-3xl font-bold text-munoz-navy sm:text-4xl">
+          Análisis clínicos más frecuentes
+        </h2>
 
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {frequentTests.map((test) => (
@@ -60,6 +51,17 @@ export function FrequentTests() {
             </li>
           ))}
         </ul>
+
+        {/* Botón alineado a la izquierda, debajo de la lista */}
+        <div className="mt-8">
+          <Link
+            href="/servicios#analisis-clinicos"
+            className={`group inline-flex items-center gap-2 rounded-full bg-munoz-green px-7 py-3.5 text-base font-semibold text-white shadow-md shadow-munoz-green/20 transition-transform hover:-translate-y-0.5 ${focus}`}
+          >
+            Ver más análisis
+            <ChevronRight size={18} className="transition-transform group-hover:translate-x-0.5" aria-hidden />
+          </Link>
+        </div>
       </div>
     </section>
   );

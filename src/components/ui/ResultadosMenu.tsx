@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { resultadosLinks } from "@/config/site";
+import { integrations } from "@/config/integrations";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue";
@@ -47,6 +48,17 @@ export function ResultadosMenu({
       document.removeEventListener("keydown", handleKey);
     };
   }, [open]);
+
+  // Con enlace único configurado (NEXT_PUBLIC_RESULTADOS_URL) el botón va directo.
+  if (integrations.resultadosUrl) {
+    return (
+      <div className={`relative ${wrapperClassName}`}>
+        <a href={integrations.resultadosUrl} target="_blank" rel="noopener noreferrer" className={triggerClassName}>
+          {children}
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div className={`relative ${wrapperClassName}`} ref={ref}>

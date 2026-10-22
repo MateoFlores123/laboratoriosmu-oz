@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { MessageCircle, X } from "lucide-react";
 import { assistant } from "@/config/site";
+import { integrations } from "@/config/integrations";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue";
@@ -89,8 +90,20 @@ export function AsistenteFlotante() {
               </button>
             </div>
             <ul className="mt-3 flex flex-col gap-2 text-sm">
+              {integrations.chatbotUrl && (
+                <li>
+                  <a
+                    href={integrations.chatbotUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 rounded-lg bg-munoz-navy px-3 py-2 font-semibold text-white hover:bg-munoz-blue"
+                  >
+                    <MessageCircle size={16} aria-hidden /> Chatear con el asistente
+                  </a>
+                </li>
+              )}
               {assistant.quickLinks.map((l) => (
-                <li key={l.href}>
+                <li key={l.href + l.label}>
                   <Link
                     href={l.href}
                     onClick={() => setPanelOpen(false)}

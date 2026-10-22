@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Search, ChevronLeft, ChevronRight, ChevronDown, ShoppingCart, Check, X, ArrowUp } from "lucide-react";
 import { labServices, serviceCategories, type ServiceCategorySlug } from "@/config/services";
 import { examDetails } from "@/config/examDetails";
+import { preanalitica } from "@/config/preanalitica";
 import { useCart } from "@/context/CartContext";
 import { InnovationsBanner } from "./InnovationsBanner";
 
@@ -273,7 +274,7 @@ export function ServiciosExplorer() {
                         href={`/servicios/${s.id}`}
                         className={`text-xs font-semibold text-munoz-navy/45 underline-offset-2 hover:text-munoz-blue hover:underline ${focus}`}
                       >
-                        Ver más{examDetails[s.id] ? "" : " (info próximamente)"}
+                        Ver más{examDetails[s.id] || preanalitica[s.id] ? "" : " (info próximamente)"}
                       </Link>
                     </div>
                   </div>

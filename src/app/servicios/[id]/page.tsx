@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { ClipboardList, Droplet, Info, MapPin, ScanLine, Sparkles, Waves, Zap, type LucideIcon } from "lucide-react";
+import { CalendarClock, ClipboardList, Droplet, FlaskConical, Info, MapPin, ScanLine, Sparkles, Waves, Zap, type LucideIcon } from "lucide-react";
 import { labServices, serviceCategories, type ServiceCategorySlug } from "@/config/services";
 import { examDetails } from "@/config/examDetails";
+import { preanalitica, preanaliticaNota } from "@/config/preanalitica";
 import { innovations } from "@/config/innovations";
 import { ExamDetailActions } from "@/components/servicios/ExamDetailActions";
 import { BackButton } from "@/components/ui/BackButton";
@@ -37,12 +38,64 @@ export default async function ExamDetailPage({ params }: Props) {
   if (!service) notFound();
 
   const detail = examDetails[service.id];
+  const pre = preanalitica[service.id];
   const notaSede = sedeExclusivaTexto(service);
   // Las 3 novedades (ecógrafo, rayos X, química e inmunobioquímica) tienen
   // foto propia y se presentan con un diseño especial: imagen a la
   // izquierda, texto a la derecha. El resto del catálogo (495 análisis) no
   // tiene fotos individuales, así que sigue con la ficha simple de siempre.
   const promo = innovations.find((i) => i.serviceId === service.id);
+
+  // Condiciones preanalíticas oficiales del laboratorio (matriz R-AC-082).
+  const preBloque = pre ? (
+    <>
+      {!detail && (
+        <div className="flex items-start gap-3">
+          <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-munoz-green/10 text-munoz-green">
+            <Droplet size={17} aria-hidden />
+          </span>
+          <div>
+            <h2 className="font-bold text-munoz-navy">Tipo de muestra</h2>
+            <p className="mt-1.5 text-sm text-munoz-navy/65">{pre.muestra}</p>
+          </div>
+        </div>
+      )}
+
+      <div className={`${detail ? "mt-6 " : "mt-6 "}flex items-start gap-3`}>
+        <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-munoz-blue/10 text-munoz-blue">
+          <ClipboardList size={17} aria-hidden />
+        </span>
+        <div>
+          <h2 className="font-bold text-munoz-navy">Preparación del paciente</h2>
+          <p className="mt-1.5 text-sm leading-relaxed text-munoz-navy/65">{pre.preparacion}</p>
+        </div>
+      </div>
+
+      <div className="mt-6 flex items-start gap-3">
+        <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-munoz-green/10 text-munoz-green">
+          <FlaskConical size={17} aria-hidden />
+        </span>
+        <div>
+          <h2 className="font-bold text-munoz-navy">Contenedor de la muestra</h2>
+          <p className="mt-1.5 text-sm text-munoz-navy/65">{pre.contenedor}</p>
+        </div>
+      </div>
+
+      {pre.entrega && (
+        <div className="mt-6 flex items-start gap-3">
+          <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-munoz-blue/10 text-munoz-blue">
+            <CalendarClock size={17} aria-hidden />
+          </span>
+          <div>
+            <h2 className="font-bold text-munoz-navy">Entrega de resultados</h2>
+            <p className="mt-1.5 text-sm text-munoz-navy/65">{pre.entrega}</p>
+          </div>
+        </div>
+      )}
+
+      <p className="mt-6 text-xs text-munoz-navy/40">{preanaliticaNota}</p>
+    </>
+  ) : null;
 
   const fichaDetalle = detail ? (
     <>
@@ -83,11 +136,15 @@ export default async function ExamDetailPage({ params }: Props) {
         </div>
       </div>
 
+      {preBloque}
+
       <p className="mt-6 text-xs text-munoz-navy/40">
         Información general de referencia. Confirma cualquier indicación especial con tu médico o con el
         laboratorio antes de la toma de muestra.
       </p>
     </>
+  ) : pre ? (
+    preBloque
   ) : (
     <div className="flex items-start gap-3">
       <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-munoz-navy/10 text-munoz-navy/50">

@@ -17,6 +17,7 @@ import { sedes, zonasConSede, type Sede } from "@/config/sedes";
 import { assistant } from "@/config/site";
 import { serviceCategories, type ServiceCategorySlug } from "@/config/services";
 import { sedeExclusivaTexto } from "@/lib/sedeDisponibilidad";
+import { enviarJson } from "@/lib/api/enviar";
 
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-munoz-blue";
@@ -62,6 +63,8 @@ export function CartDrawer() {
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
   const [correo, setCorreo] = useState("");
+  const [enviando, setEnviando] = useState(false);
+  const [viaWhatsapp, setViaWhatsapp] = useState(true);
 
   const sedesSugeridas = useMemo(() => (zona ? sedes.filter((s) => s.zone === zona) : []), [zona]);
   const sedeSeleccionada: Sede | undefined = sedes.find((s) => s.id === sedeId);
@@ -143,10 +146,33 @@ export function CartDrawer() {
   // El mensaje para agendar siempre va por WhatsApp (es una solicitud que
   // necesita respuesta rápida). El correo queda para más adelante, cuando
   // haya una cotización formal con precios reales que enviar por ese medio.
-  function handleEnviar() {
-    if (!puedeEnviar) return;
+  // Se envía el JSON al endpoint de Muñoz (vía /api/solicitudes), que lo deriva
+  // a WhatsApp. Si el endpoint aún no está configurado o falla, se usa el plan B:
+  // abrir WhatsApp con el mensaje, como funcionaba antes.
+  async function handleEnviar() {
+    if (!puedeEnviar || enviando) return;
+    setEnviando(true);
     const mensaje = construirMensaje();
-    window.open(`https://wa.me/${assistant.whatsapp}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
+    const resultado = await enviarJson("/api/solicitudes", {
+      modalidad,
+      fecha,
+      examenes: items.map((i) => ({ id: i.id, nombre: i.name })),
+      sede:
+        modalidad === "sede" && sedeSeleccionada
+          ? { id: sedeSeleccionada.id, nombre: sedeSeleccionada.name, direccion: sedeSeleccionada.address }
+          : null,
+      domicilio:
+        modalidad === "domicilio" ? { direccion, distrito, referencia: referencia.trim() || null } : null,
+      paciente: { nombre, telefono, correo: correo.trim() || null },
+      mensaje,
+    });
+    if (resultado === "ok") {
+      setViaWhatsapp(false);
+    } else {
+      setViaWhatsapp(true);
+      window.open(`https://wa.me/${assistant.whatsapp}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
+    }
+    setEnviando(false);
     setPaso("enviado");
   }
 
@@ -412,10 +438,13 @@ export function CartDrawer() {
             <div className="flex items-start gap-3 rounded-2xl border border-munoz-green/30 bg-munoz-green/5 p-5">
               <Check size={20} className="mt-0.5 shrink-0 text-munoz-green" aria-hidden />
               <div>
-                <p className="font-semibold text-munoz-navy">Tu solicitud está lista.</p>
+                <p className="font-semibold text-munoz-navy">
+                  {viaWhatsapp ? "Tu solicitud está lista." : "¡Solicitud enviada!"}
+                </p>
                 <p className="mt-1 text-sm text-munoz-navy/60">
-                  Se abrió WhatsApp con el mensaje. Si no se abrió, revisa el bloqueo de ventanas emergentes de tu
-                  navegador.
+                  {viaWhatsapp
+                    ? "Se abrió WhatsApp con el mensaje. Si no se abrió, revisa el bloqueo de ventanas emergentes de tu navegador."
+                    : "Recibimos tu solicitud. Te escribiremos por WhatsApp para confirmar la atención."}
                 </p>
               </div>
             </div>
@@ -461,10 +490,10 @@ export function CartDrawer() {
               <button
                 type="button"
                 onClick={handleEnviar}
-                disabled={!puedeEnviar}
+                disabled={!puedeEnviar || enviando}
                 className={`w-full rounded-full bg-munoz-navy py-3 text-sm font-bold text-white shadow-md shadow-munoz-navy/25 transition-colors hover:bg-munoz-blue disabled:pointer-events-none disabled:opacity-40 ${focus}`}
               >
-                Enviar solicitud
+                {enviando ? "Enviando…" : "Enviar solicitud"}
               </button>
             )}
           </div>
