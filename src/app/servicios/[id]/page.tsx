@@ -42,7 +42,7 @@ export default async function ExamDetailPage({ params }: Props) {
   const notaSede = sedeExclusivaTexto(service);
   // Las 3 novedades (ecógrafo, rayos X, química e inmunobioquímica) tienen
   // foto propia y se presentan con un diseño especial: imagen a la
-  // izquierda, texto a la derecha. El resto del catálogo (495 análisis) no
+  // izquierda, texto a la derecha. El resto del catálogo (todo el catálogo) no
   // tiene fotos individuales, así que sigue con la ficha simple de siempre.
   const promo = innovations.find((i) => i.serviceId === service.id);
 

@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Search, ChevronLeft, ChevronRight, ChevronDown, ShoppingCart, Check, X, ArrowUp } from "lucide-react";
 import { labServices, serviceCategories, type ServiceCategorySlug } from "@/config/services";
-import { examDetails } from "@/config/examDetails";
-import { preanalitica } from "@/config/preanalitica";
 import { useCart } from "@/context/CartContext";
 import { InnovationsBanner } from "./InnovationsBanner";
 
@@ -272,9 +270,10 @@ export function ServiciosExplorer() {
                       </span>
                       <Link
                         href={`/servicios/${s.id}`}
-                        className={`text-xs font-semibold text-munoz-navy/45 underline-offset-2 hover:text-munoz-blue hover:underline ${focus}`}
+                        className={`inline-flex items-center gap-1 rounded-full bg-munoz-blue/10 px-3.5 py-1.5 text-sm font-bold text-munoz-blue transition-colors hover:bg-munoz-blue hover:text-white ${focus}`}
                       >
-                        Ver más{examDetails[s.id] || preanalitica[s.id] ? "" : " (info próximamente)"}
+                        Ver más
+                        <ChevronRight size={15} aria-hidden />
                       </Link>
                     </div>
                   </div>
